@@ -2,8 +2,6 @@ package main
 
 import (
 	"errors"
-	"os"
-	"reflect"
 )
 
 type Node struct {
@@ -156,10 +154,7 @@ func deleteAll(l *LinkedList, n int) {
 
 func deleteAllHead(l *LinkedList, n int) {
 	pred := func() bool { return l.head != nil && l.head.value == n }
-	act := func() {
-		l.head = l.head.next
-
-	}
+	act := func() { l.head = l.head.next }
 
 	iter(pred, act)
 
@@ -175,7 +170,7 @@ func deleteAllBody(l *LinkedList, n int) {
 	pred := func() bool { return tmp != nil && tmp.next != nil && tmp.next != l.tail }
 
 	act := func() {
-		if tmp.next.value == n {
+		for tmp.next.value == n && tmp.next != l.tail {
 			tmp.next = tmp.next.next
 		}
 
