@@ -162,18 +162,19 @@ func TestInsertFirstInEmptyList(t *testing.T) {
 	sut.InsertFirst(insert)
 
 	assert.Equal(t, sut.head, &insert)
+	assert.Equal(t, sut.head, sut.tail)
 	assert.Nil(t, sut.head.next)
 }
 
 func TestInsertFirstInList(t *testing.T) {
 	sut := LinkedList{}
-	for i := 0; i < 10; i++ {
-		sut.AddInTail(Node{nil, i})
+	for i := 0; i < 1; i++ {
+		node := Node{nil, i}
+		sut.AddInTail(node)
 	}
 
 	insert := Node{nil, 20}
 	sut.InsertFirst(insert)
-
 	assert.Equal(t, sut.head.value, insert.value)
 }
 

@@ -2,8 +2,6 @@ package main
 
 import (
 	"errors"
-	"os"
-	"reflect"
 )
 
 type Node struct {
@@ -106,8 +104,14 @@ func (l *LinkedList) Insert(after *Node, add Node) {
 }
 
 func (l *LinkedList) InsertFirst(first Node) {
+
+	if l.head == nil {
+		l.tail = &first
+	}
+
 	first.next = l.head
 	l.head = &first
+
 }
 
 func (l *LinkedList) Clean() {
