@@ -138,15 +138,10 @@ func deleteAll(l *LinkedList, n int) {
 }
 
 func deleteAllHead(l *LinkedList, n int) {
-	pred := func() bool {
-		return l.head != nil && l.head.value == n
-	}
+	pred := func() bool { return l.head != nil && l.head.value == n }
+	act := func() { l.head = l.head.next }
 
-	a := func() {
-		l.head = l.head.next
-	}
-
-	iter(pred, a)
+	iter(pred, act)
 }
 
 func deleteAllBody(l *LinkedList, n int) {
@@ -167,11 +162,4 @@ func iter(cond func() bool, action func()) {
 	for cond() {
 		action()
 	}
-}
-
-func cond(ift func() bool, act func(), continu func()) {
-	if ift() {
-		act()
-	}
-	continu()
 }

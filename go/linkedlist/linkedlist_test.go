@@ -19,13 +19,13 @@ func TestCreateList(t *testing.T) {
 
 func TestAddInEmptyList(t *testing.T) {
 	sut := LinkedList{}
+	insert := Node{nil, 10}
 
-	sut.AddInTail(Node{nil, 10})
+	sut.AddInTail(insert)
 
 	assert.Equal(t, sut.Count(), 1)
 	assert.Equal(t, sut.head, sut.tail)
-
-	assert.NotNil(t, sut.head)
+	assert.Equal(t, sut.head, &insert)
 }
 
 // Adding many different notes
@@ -278,6 +278,12 @@ func TestDeleteAllFromList(t *testing.T) {
 			sut.Delete(edge.value, true)
 		})
 	}
+
+	assert.Equal(t, 0, sut.Count())
+}
+
+func TestCountInEmptyList(t *testing.T) {
+	sut := LinkedList{}
 
 	assert.Equal(t, 0, sut.Count())
 }
