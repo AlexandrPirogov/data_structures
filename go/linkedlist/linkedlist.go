@@ -1,6 +1,9 @@
-package linkedlist
+package main
 
-import "errors"
+import (
+	"os"
+	"reflect"
+)
 
 type Node struct {
 	next  *Node
