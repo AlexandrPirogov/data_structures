@@ -118,6 +118,10 @@ func deleteOne(l *LinkedList, n int) {
 
 	if l.head.value == n {
 		l.head = l.head.next
+	}
+
+	if l.head == nil {
+		l.tail = nil
 		return
 	}
 
@@ -126,10 +130,18 @@ func deleteOne(l *LinkedList, n int) {
 
 	pred := func() bool { return !deleted && tmp.next != nil }
 	act := func() {
+
 		if tmp.next.value == n {
-			tmp.next = tmp.next.next
+			if tmp.next == l.tail {
+				l.tail = tmp
+				l.tail.next = nil
+			} else {
+				tmp.next = tmp.next.next
+			}
+
 			deleted = true
 		}
+
 		tmp = tmp.next
 	}
 
@@ -139,27 +151,46 @@ func deleteOne(l *LinkedList, n int) {
 func deleteAll(l *LinkedList, n int) {
 	deleteAllHead(l, n)
 	deleteAllBody(l, n)
+
 }
 
 func deleteAllHead(l *LinkedList, n int) {
 	pred := func() bool { return l.head != nil && l.head.value == n }
-	act := func() { l.head = l.head.next }
+	act := func() {
+		l.head = l.head.next
+
+	}
 
 	iter(pred, act)
+
+	if l.head == l.tail && l.head.value == n || l.head == nil {
+		l.head = nil
+		l.tail = nil
+	}
+
 }
 
 func deleteAllBody(l *LinkedList, n int) {
 	tmp := l.head
-	pred := func() bool { return tmp != nil && tmp.next != nil }
+	pred := func() bool { return tmp != nil && tmp.next != nil && tmp.next != l.tail }
 
 	act := func() {
 		if tmp.next.value == n {
 			tmp.next = tmp.next.next
 		}
-		tmp = tmp.next
+
+		if tmp.next != l.tail {
+			tmp = tmp.next
+		}
 	}
 
 	iter(pred, act)
+
+	if tmp != nil && tmp.next == l.tail && l.tail.value == n {
+		l.tail = tmp
+		l.tail.next = nil
+	}
+
 }
 
 func iter(cond func() bool, action func()) {

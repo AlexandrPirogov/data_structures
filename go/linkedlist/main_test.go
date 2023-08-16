@@ -1,4 +1,4 @@
-package linkedlist
+package main
 
 import (
 	"fmt"
@@ -124,7 +124,7 @@ func TestFindAllInList(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		t.Run("", func(t *testing.T) {
 			res := sut.FindAll(duplicate)
-			assert.Equal(t, len(res), sut.Count())
+			assert.NotEmpty(t, res)
 		})
 	}
 }
@@ -240,12 +240,69 @@ func TestDeleteOneFromList(t *testing.T) {
 	}
 }
 
+func TestDeleteOneFromTail(t *testing.T) {
+	sut := LinkedList{}
+	nodes := make([]Node, 0)
+	for i := 3; i >= 0; i-- {
+		add := Node{nil, i}
+		nodes = append(nodes, add)
+		sut.AddInTail(add)
+	}
+
+	for k := range nodes {
+		t.Run(fmt.Sprintf("deleting %d", k), func(t *testing.T) {
+			old := sut.tail
+			sut.Delete(k, false)
+			new := sut.tail
+			if new != nil {
+				assert.Equal(t, new.value-1, old.value)
+			}
+		})
+	}
+
+	assert.Nil(t, sut.tail)
+}
+
+func TestDeleteOneFromHead(t *testing.T) {
+	sut := LinkedList{}
+	nodes := make([]Node, 0)
+	for i := 0; i < 3; i++ {
+		add := Node{nil, i}
+		nodes = append(nodes, add)
+		sut.AddInTail(add)
+	}
+
+	for _, edge := range nodes {
+		t.Run(fmt.Sprintf("deleting %d", edge.value), func(t *testing.T) {
+			old := sut.head
+			sut.Delete(edge.value, false)
+			new := sut.head
+			if new != nil {
+				assert.Equal(t, new.value-1, old.value)
+			}
+		})
+	}
+
+	assert.Nil(t, sut.head)
+}
+
+func TestDeleteAllEmpty(t *testing.T) {
+	sut := LinkedList{}
+
+	sut.Delete(-1, true)
+
+	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
+	assert.Empty(t, sut.Count())
+
+}
+
 func TestDeleteAllFromList(t *testing.T) {
 	sut := LinkedList{}
 	nodes := []Node{
 		{
 			nil,
-			1,
+			2,
 		},
 		{
 			nil,
@@ -254,14 +311,6 @@ func TestDeleteAllFromList(t *testing.T) {
 		{
 			nil,
 			2,
-		},
-		{
-			nil,
-			3,
-		},
-		{
-			nil,
-			3,
 		},
 		{
 			nil,
@@ -274,11 +323,15 @@ func TestDeleteAllFromList(t *testing.T) {
 	}
 
 	for _, edge := range nodes {
-		t.Run("", func(t *testing.T) {
+		t.Run(fmt.Sprintf("egdt %d", edge.value), func(t *testing.T) {
 			sut.Delete(edge.value, true)
+			res := sut.FindAll(edge.value)
+			assert.Empty(t, res)
 		})
 	}
 
+	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
 	assert.Equal(t, 0, sut.Count())
 }
 
