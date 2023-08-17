@@ -2,8 +2,6 @@ package main
 
 import (
 	"errors"
-	"os"
-	"reflect"
 )
 
 type Node struct {

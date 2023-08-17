@@ -129,6 +129,23 @@ func TestFindAllInList(t *testing.T) {
 	}
 }
 
+// checks that findall in list with duplicates
+// returns slice with all elems in lsit
+func TestFindAllEmptyt(t *testing.T) {
+	duplicate := 10
+	sut := LinkedList{}
+	for i := 0; i < 10; i++ {
+		sut.AddInTail(Node{nil, duplicate})
+	}
+
+	for i := 0; i < 10; i++ {
+		t.Run("", func(t *testing.T) {
+			res := sut.FindAll(duplicate * -1)
+			assert.Empty(t, res)
+		})
+	}
+}
+
 func TestCleanEmptyList(t *testing.T) {
 	sut := LinkedList{}
 
@@ -168,7 +185,7 @@ func TestInsertFirstInEmptyList(t *testing.T) {
 
 func TestInsertFirstInList(t *testing.T) {
 	sut := LinkedList{}
-	for i := 0; i < 1; i++ {
+	for i := 0; i < 10; i++ {
 		node := Node{nil, i}
 		sut.AddInTail(node)
 	}
@@ -204,6 +221,36 @@ func TestInsertInList(t *testing.T) {
 			assert.Equal(t, node.next.value, edge.value)
 		})
 	}
+}
+
+func TestInsertInListCustom(t *testing.T) {
+	sut := LinkedList{}
+	nodes := []Node{
+		{
+			nil,
+			1,
+		},
+		{
+			nil,
+			1,
+		},
+		{
+			nil,
+			1,
+		},
+		{
+			nil,
+			1,
+		},
+		{
+			nil,
+			1,
+		},
+	}
+
+	insert := Node{nil, 2}
+	sut.Insert(&nodes[0], insert)
+	assert.Equal(t, sut.tail, insert)
 }
 
 func TestDeleteFromEmptyList(t *testing.T) {
