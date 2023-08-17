@@ -8,3 +8,4 @@ Here you can see implementation of known data structures.
 |:------------------:|:-------------------------------------------------------------------------------------------------:|
 |Linked List         | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/linkedlist)      |
 |Double Linked List  | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/doublelinkedlist)|
+|Dynamic Array       | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/dynamicarry)|
