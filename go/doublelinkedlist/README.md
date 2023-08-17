@@ -3,12 +3,28 @@
 Adding an extra pointer allows you to traverse the list both ways, which can help when deleting nodes. 
 There is also such a unique ability of doubly linked lists as efficient reordering of nodes without additional memory allocation.
 
-## Advantages:
-1) Deleting nodes much easier than in linked list
-2) Easy to shuffle nodes in double linked list
+## Properties
 
-## Disadvantages:
-1) Still searching elements takes `O(n)`
+Linked list can be:
+1) Empty or filled
+2) Contains duplicates or not
+
+## Implementation
+
+Be carefull with:
+1) Value of head and tile while inserting/deleting elements
+2) Shuffle elemenets
+3) Deleting all elements with value V 
+4) Value of next/prev pointers
+
+## Advantages & Disadvantages
+
+:heavy_plus_sign: Deleting nodes much easier than in linked list
+
+:heavy_plus_sign: Easy to shuffle nodes in double linked list
+
+
+:heavy_minus_sign: Still searching elements takes `O(n)`
 
 ## Complexety 
 
