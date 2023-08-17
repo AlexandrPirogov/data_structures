@@ -223,7 +223,7 @@ func TestRemoveFromEmpty(t *testing.T) {
 	err := sut.Remove(0)
 	new := sut.count
 
-	assert.Nil(t, err)
+	assert.NotNil(t, err)
 	assert.Equal(t, old, new)
 }
 
