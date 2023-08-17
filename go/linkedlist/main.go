@@ -2,6 +2,8 @@ package main
 
 import (
 	"errors"
+	"os"
+	"reflect"
 )
 
 type Node struct {
@@ -94,13 +96,17 @@ func (l *LinkedList) Delete(n int, all bool) {
 
 func (l *LinkedList) Insert(after *Node, add Node) {
 	tmp := l.head
-	pred := func() bool { return tmp.value != add.value }
+	pred := func() bool { return tmp.value != after.value }
 	act := func() { tmp = tmp.next }
 
 	iter(pred, act)
 
 	add.next = tmp.next
 	tmp.next = &add
+
+	if tmp == l.tail {
+		l.tail = &add
+	}
 }
 
 func (l *LinkedList) InsertFirst(first Node) {

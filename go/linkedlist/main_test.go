@@ -223,7 +223,7 @@ func TestInsertInList(t *testing.T) {
 	}
 }
 
-func TestInsertInListCustom(t *testing.T) {
+func TestInsertInHeadList(t *testing.T) {
 	sut := LinkedList{}
 	nodes := []Node{
 		{
@@ -232,25 +232,62 @@ func TestInsertInListCustom(t *testing.T) {
 		},
 		{
 			nil,
-			1,
+			2,
 		},
 		{
 			nil,
-			1,
+			3,
 		},
 		{
 			nil,
-			1,
+			4,
 		},
 		{
 			nil,
-			1,
+			5,
 		},
 	}
+	for _, node := range nodes {
+		sut.InsertFirst(node)
+		assert.Equal(t, node.value, sut.head.value)
+	}
+	insert := Node{nil, 412}
+	sut.Insert(&nodes[4], insert)
+	assert.Equal(t, sut.head.next.value, insert.value)
+}
 
-	insert := Node{nil, 2}
+func TestInsertInTailList(t *testing.T) {
+	sut := LinkedList{}
+	nodes := []Node{
+		{
+			nil,
+			1,
+		},
+		{
+			nil,
+			2,
+		},
+		{
+			nil,
+			3,
+		},
+		{
+			nil,
+			4,
+		},
+		{
+			nil,
+			5,
+		},
+	}
+	for _, node := range nodes {
+		sut.InsertFirst(node)
+		assert.Equal(t, node.value, sut.head.value)
+	}
+	insert := Node{nil, 412}
+
 	sut.Insert(&nodes[0], insert)
-	assert.Equal(t, sut.tail, insert)
+	assert.Equal(t, sut.tail.value, insert.value)
 }
 
 func TestDeleteFromEmptyList(t *testing.T) {
@@ -258,7 +295,8 @@ func TestDeleteFromEmptyList(t *testing.T) {
 	sut.Delete(10, false)
 
 	assert.Nil(t, sut.head)
-	assert.Equal(t, 0, sut.Count())
+	assert.Nil(t, sut.tail)
+	assert.Empty(t, sut.Count())
 }
 
 func TestDeleteAllFromEmptyList(t *testing.T) {
@@ -266,7 +304,8 @@ func TestDeleteAllFromEmptyList(t *testing.T) {
 	sut.Delete(10, true)
 
 	assert.Nil(t, sut.head)
-	assert.Equal(t, 0, sut.Count())
+	assert.Nil(t, sut.tail)
+	assert.Empty(t, sut.Count())
 }
 
 func TestDeleteOneFromList(t *testing.T) {
@@ -309,6 +348,8 @@ func TestDeleteOneFromTail(t *testing.T) {
 	}
 
 	assert.Nil(t, sut.tail)
+	assert.Nil(t, sut.head)
+	assert.Empty(t, sut.Count())
 }
 
 func TestDeleteOneFromHead(t *testing.T) {
@@ -332,6 +373,8 @@ func TestDeleteOneFromHead(t *testing.T) {
 	}
 
 	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
+	assert.Empty(t, sut.Count())
 }
 
 func TestDeleteAllEmpty(t *testing.T) {
@@ -381,6 +424,42 @@ func TestDeleteAllFromList(t *testing.T) {
 	assert.Nil(t, sut.head)
 	assert.Nil(t, sut.tail)
 	assert.Equal(t, 0, sut.Count())
+}
+
+func TestDeleteAllFromTail(t *testing.T) {
+	sut := LinkedList{}
+	nodes := []Node{
+		{
+			nil,
+			1,
+		},
+		{
+			nil,
+			1,
+		},
+		{
+			nil,
+			3,
+		},
+		{
+			nil,
+			2,
+		},
+	}
+
+	for _, node := range nodes {
+		sut.AddInTail(node)
+	}
+
+	sut.Delete(2, true)
+	res := sut.FindAll(2)
+	assert.Empty(t, res)
+	assert.Equal(t, 3, sut.tail.value)
+
+	sut.Delete(3, true)
+	res = sut.FindAll(3)
+	assert.Empty(t, res)
+	assert.Equal(t, 1, sut.tail.value)
 }
 
 func TestDeleteAllCustom(t *testing.T) {
