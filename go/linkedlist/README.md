@@ -17,12 +17,12 @@ Be carefull with:
 2) Shuffle elemenets
 3) Deleting all elements with value V 
 
-## Advantages:
-1) Fast adding/removing elemts from begining and end
-2) Flexible memory allocation
+## Advantages & Disadvantages
+:heavy_plus_sign: Fast adding/removing elemts from begining and end
 
-## Disadvantages:
-1) `O(n)` searching
+:heavy_plus_sign: Flexible memory allocation
+
+:heavy_minus_sign: `O(n)` searching
 
 ## Complexetiy 
 
