@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"os"
+	"fmt"
+)
 
 //  "fmt" включите если используете
 
@@ -32,6 +35,13 @@ func (q *Queue[T]) Enqueue(itm T) {
 	q = ifNil(q)
 	q.elems = append(q.elems, itm)
 	q.count++
+}
+
+func (q *Queue[T]) Spin(n int) {
+	head := q.elems[n:]
+	tail := q.elems[0:n]
+	head = append(head, tail...)
+	q.elems = head
 }
 
 func ifNil[T any](q *Queue[T]) *Queue[T] {

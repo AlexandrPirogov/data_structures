@@ -57,3 +57,19 @@ func TestDequeueEnqueue(t *testing.T) {
 	_, res := sut.Dequeue()
 	assert.NotNil(t, res)
 }
+
+func TestQueueSpin(t *testing.T) {
+	sut := Queue[int]{}
+	nums := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	for _, num := range nums {
+		sut.Enqueue(num)
+	}
+
+	sut.Spin(5)
+	sut.Spin(5)
+
+	res, _ := sut.Dequeue()
+
+	assert.Equal(t, nums[0], res)
+}
