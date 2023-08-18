@@ -4,6 +4,7 @@ import (
 	"os"
 	"fmt"
 )
+
 //  "fmt"
 
 type Deque[T any] struct {
@@ -12,24 +13,20 @@ type Deque[T any] struct {
 }
 
 func (d *Deque[T]) Size() int {
-	d = ifNil(d)
 	return d.count
 }
 
 func (d *Deque[T]) AddFront(itm T) {
-	d = ifNil(d)
 	d.elems = append(d.elems, itm)
 	d.count++
 }
 
 func (d *Deque[T]) AddTail(itm T) {
-	d = ifNil(d)
 	d.elems = append([]T{itm}, d.elems...)
 	d.count++
 }
 
 func (d *Deque[T]) RemoveFront() (T, error) {
-	d = ifNil(d)
 	var result T
 	if d.count == 0 {
 		return result, fmt.Errorf("deque is empty")
@@ -42,7 +39,6 @@ func (d *Deque[T]) RemoveFront() (T, error) {
 }
 
 func (d *Deque[T]) RemoveTail() (T, error) {
-	d = ifNil(d)
 	var result T
 	if d.count == 0 {
 		return result, fmt.Errorf("deque is empty")

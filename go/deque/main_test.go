@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreateEmpty(t *testing.T) {
-	var sut *Deque[int]
+	sut := Deque[int]{}
 
 	assert.Equal(t, 0, sut.Size())
 }
@@ -20,6 +20,7 @@ func TestSingleAddInFront(t *testing.T) {
 	new := sut.Size()
 
 	assert.Equal(t, old+1, new)
+	assert.Equal(t, 1, sut.elems[0])
 }
 
 func TestSingleAddFrontRemoveFront(t *testing.T) {
