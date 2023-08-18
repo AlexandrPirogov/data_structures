@@ -47,6 +47,7 @@ func (st *Stack[T]) Pop() (T, error) {
 		return result, fmt.Errorf(error_stack_empty)
 	}
 	result = st.elems[st.count-1]
+	st.elems = st.elems[:st.count-1]
 	st.count--
 	return result, nil
 }
