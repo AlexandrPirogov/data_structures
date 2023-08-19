@@ -373,3 +373,25 @@ func checkDesc[T constraints.Ordered](l OrderedList[T], t *testing.T) {
 		tmp = tmp.next
 	}
 }
+
+func TestClearEmpty(t *testing.T) {
+	sut := OrderedList[int]{nil, nil, false}
+
+	sut.Clear(true)
+
+	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
+}
+
+func TestClearFilled(t *testing.T) {
+	sut := OrderedList[int]{nil, nil, false}
+	items := []int{1, 1, 2, 3, 4, 5, 5, 6, -11, 6, 7, 8, 0}
+
+	for _, item := range items {
+		sut.Add(item)
+	}
+	sut.Clear(true)
+
+	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
+}
