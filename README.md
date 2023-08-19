@@ -12,3 +12,4 @@ Here you can see implementation of known data structures.
 | Stack              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/stack)           |
 | Queue              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/queue)           |
 | Deque              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/deque)           |
+| Ordered List       | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/orderedlist)     |
