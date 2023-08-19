@@ -63,7 +63,7 @@ func TestSeekSlotWithoutCollisionFilled(t *testing.T) {
 		sut.Put(str)
 	}
 
-	ind := sut.Put("some")
+	ind := sut.SeekSlot("some")
 
 	assert.Equal(t, -1, ind)
 }
@@ -77,7 +77,7 @@ func TestSeekSlotWithoutCollisionNotFilled(t *testing.T) {
 		sut.Put(str)
 	}
 
-	ind := sut.Put("g")
+	ind := sut.SeekSlot("some")
 
 	assert.NotEqual(t, -1, ind)
 }
@@ -91,9 +91,11 @@ func TestSeekSlotWithCollisionFilled(t *testing.T) {
 		sut.Put(str)
 	}
 
+	seek := sut.SeekSlot("a")
 	ind := sut.Put("a")
 
 	assert.Equal(t, -1, ind)
+	assert.NotEqual(t, -1, seek)
 }
 
 func TestFindInEmpty(t *testing.T) {
@@ -102,4 +104,40 @@ func TestFindInEmpty(t *testing.T) {
 
 	res := sut.Find("not exists")
 	assert.Equal(t, -1, res)
+}
+
+func TestFindInFilled(t *testing.T) {
+	sz, step := 19, 3
+	sut := Init(sz, step)
+
+	strs := []string{"a", "b", "c", "d", "e", "f"}
+
+	for _, str := range strs {
+		sut.Put(str)
+	}
+
+	for _, str := range strs {
+		t.Run("", func(t *testing.T) {
+			res := sut.Find(str)
+			assert.NotEqual(t, -1, res)
+		})
+	}
+}
+
+func TestFindNotExistingInFilled(t *testing.T) {
+	sz, step := 19, 3
+	sut := Init(sz, step)
+
+	strs := []string{"a", "b", "c", "d", "e", "f"}
+
+	for _, str := range strs {
+		sut.Put(str)
+	}
+
+	for _, str := range strs {
+		t.Run("", func(t *testing.T) {
+			res := sut.Find(str + "suffix")
+			assert.Equal(t, -1, res)
+		})
+	}
 }
