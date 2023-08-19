@@ -181,6 +181,7 @@ func TestDeleteEmpty(t *testing.T) {
 	new := sut.Count()
 
 	assert.Equal(t, old, new)
+	assert.Equal(t, sut.tail, sut.head)
 }
 
 func TestDeleteExistingDesc(t *testing.T) {
@@ -205,6 +206,97 @@ func TestDeleteExistingDesc(t *testing.T) {
 	}
 
 	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
+}
+
+func TestDeleteExistingHeadDesc(t *testing.T) {
+	sut := OrderedList[int]{nil, nil, true}
+	items := []int{1, 2, 3, 4, 5, 6}
+
+	for _, item := range items {
+		sut.Add(item)
+	}
+	checkAsc(sut, t)
+
+	for _, item := range items {
+		t.Run("", func(t *testing.T) {
+			old := sut.Count()
+			sut.Delete(item)
+			new := sut.Count()
+
+			assert.Equal(t, old-1, new)
+			if sut.head != nil && sut.head != sut.tail && sut.head.next != sut.tail {
+				assert.Equal(t, sut.head.value+1, sut.head.next.value)
+				assert.Equal(t, sut.head, sut.head.next.prev)
+
+			}
+			checkAsc(sut, t)
+
+		})
+	}
+
+	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
+}
+
+func TestDeleteExistingTailDesc(t *testing.T) {
+	sut := OrderedList[int]{nil, nil, true}
+	items := []int{6, 5, 4, 3, 2, 1}
+
+	for _, item := range items {
+		sut.Add(item)
+	}
+	checkAsc(sut, t)
+
+	for _, item := range items {
+		t.Run("", func(t *testing.T) {
+			old := sut.Count()
+			sut.Delete(item)
+			new := sut.Count()
+
+			assert.Equal(t, old-1, new)
+			if sut.head != nil && sut.head != sut.tail && sut.head.next != sut.tail {
+				assert.Equal(t, item-1, sut.tail.value)
+			}
+			checkAsc(sut, t)
+
+		})
+	}
+
+	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
+}
+
+func TestDeleteExistingTailAsc(t *testing.T) {
+	sut := OrderedList[int]{nil, nil, true}
+	items := []int{1, 2, 3, 4, 5, 6}
+
+	for _, item := range items {
+		sut.Add(item)
+	}
+
+	for i, j := 0, len(items)-1; i < j; i, j = i+1, j-1 {
+		items[i], items[j] = items[j], items[i]
+	}
+
+	checkAsc(sut, t)
+
+	for _, item := range items {
+		t.Run("", func(t *testing.T) {
+			old := sut.Count()
+			sut.Delete(item)
+			new := sut.Count()
+			assert.Equal(t, old-1, new)
+			if sut.head != nil && sut.head != sut.tail && sut.head.next != sut.tail {
+				assert.Equal(t, item-1, sut.tail.value)
+			}
+			checkAsc(sut, t)
+
+		})
+	}
+
+	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
 }
 
 func TestDeleteExistingAsc(t *testing.T) {
@@ -229,6 +321,7 @@ func TestDeleteExistingAsc(t *testing.T) {
 	}
 
 	assert.Nil(t, sut.head)
+	assert.Nil(t, sut.tail)
 }
 
 func FuzzAddIntDesc(f *testing.F) {

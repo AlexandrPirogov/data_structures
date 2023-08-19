@@ -106,11 +106,14 @@ func (l *OrderedList[T]) Delete(n T) {
 		return
 	}
 
+	if l.Compare(l.head.value, n) == 0 && l.head == l.tail {
+		l.head, l.tail = nil, nil
+		return
+	}
+
 	if l.Compare(l.head.value, n) == 0 {
 		l.head = l.head.next
-		if l.head != nil {
-			l.head.prev = nil
-		}
+		l.head.prev = nil
 		return
 	}
 
@@ -124,12 +127,16 @@ func (l *OrderedList[T]) Delete(n T) {
 
 func (l *OrderedList[T]) deleteAsc(n T) {
 	tmp := l.head
+
 	pred := func() bool { return tmp != nil && l.Compare(tmp.value, n) != 0 }
 	act := func() { tmp = tmp.next }
+
 	l.iter(pred, act)
-	if tmp.value == n && tmp.next == nil {
+
+	if l.Compare(tmp.value, n) == 0 && tmp.next == nil {
 		tmp = tmp.prev
 		tmp.next = nil
+		l.tail = tmp
 		return
 	}
 
@@ -154,6 +161,7 @@ func (l *OrderedList[T]) deleteDesc(n T) {
 	if l.Compare(tmp.value, n) == 0 && tmp.next == nil {
 		tmp = tmp.prev
 		tmp.next = nil
+		l.tail = tmp
 		return
 	}
 
