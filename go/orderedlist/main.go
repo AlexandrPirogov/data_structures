@@ -176,6 +176,7 @@ func (l *OrderedList[T]) deleteDesc(n T) {
 func (l *OrderedList[T]) Clear(asc bool) {
 	l._ascending = asc
 	l.head = nil
+	l.tail = nil
 }
 
 func (l *OrderedList[T]) Compare(v1 T, v2 T) int {
