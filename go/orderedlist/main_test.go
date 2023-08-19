@@ -14,6 +14,37 @@ func TestCreate(t *testing.T) {
 
 }
 
+func TestAddAscTwoElems(t *testing.T) {
+	sut := OrderedList[int]{nil, nil, true}
+	sut.Add(1)
+	sut.Add(2)
+
+	assert.Equal(t, sut.head.next, sut.tail)
+	assert.Equal(t, sut.head, sut.tail.prev)
+	checkAsc(sut, t)
+}
+
+func TestAddDescTwoElems(t *testing.T) {
+	sut := OrderedList[int]{nil, nil, false}
+	sut.Add(1)
+	sut.Add(2)
+
+	assert.Equal(t, sut.head.next, sut.tail)
+	assert.Equal(t, sut.head, sut.tail.prev)
+	assert.Equal(t, sut.head.value, 2)
+	assert.Equal(t, sut.tail.value, 1)
+	checkDesc(sut, t)
+}
+
+func TestAddAscInEmpty(t *testing.T) {
+	sut := OrderedList[int]{nil, nil, true}
+	sut.Add(1)
+
+	assert.Equal(t, sut.head, sut.tail)
+	assert.Equal(t, sut.head.value, 1)
+	checkAsc(sut, t)
+}
+
 func TestAddAsc(t *testing.T) {
 	sut := OrderedList[int]{nil, nil, true}
 	items := []int{1, 1, 2, 3, 4, 5, 5, 6, -11, 6, 7, 8, 0}
@@ -23,6 +54,7 @@ func TestAddAsc(t *testing.T) {
 	}
 
 	assert.Equal(t, len(items), sut.Count())
+	assert.Equal(t, 8, sut.tail.value)
 	checkAsc(sut, t)
 }
 
@@ -53,6 +85,7 @@ func TestAddDesc(t *testing.T) {
 	}
 
 	assert.Equal(t, len(items), sut.Count())
+	assert.Equal(t, -11, sut.tail.value)
 	checkDesc(sut, t)
 }
 
@@ -81,6 +114,9 @@ func TestFindExistingAsc(t *testing.T) {
 			assert.Equal(t, item, res.value)
 		})
 	}
+
+	assert.Equal(t, sut.tail.value, 8)
+	assert.Equal(t, sut.head.value, -11)
 }
 
 func TestFindExistingDesc(t *testing.T) {

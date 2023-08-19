@@ -31,6 +31,7 @@ func (l *OrderedList[T]) Count() int {
 func (l *OrderedList[T]) Add(item T) {
 	if l.head == nil {
 		l.head = &Node[T]{nil, nil, item}
+		l.tail = l.head
 		return
 	}
 
@@ -229,6 +230,7 @@ func (l *OrderedList[T]) insertInBody(n1 *Node[T], n2 *Node[T]) {
 func (l *OrderedList[T]) insertInTail(n1 *Node[T], n2 *Node[T]) {
 	n1.next = n2
 	n2.prev = n1
+	l.tail = n2
 }
 
 func (l *OrderedList[T]) iter(pred func() bool, act func()) {
