@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 )
 
 type NativeDictionary[T any] struct {
