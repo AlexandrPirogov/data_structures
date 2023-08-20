@@ -10,33 +10,38 @@ This means our insert operation takes O(n) on average. The situation is similar 
 ## Properties
 
 Dynamic array can be:
-1) Empty or filled
-2) Filled to a certain percentage
+1) more than `k%` full. This greatly affects the number of collisions.
 
 ## Implementation
 
 Be carefull with:
-1) Accesing elemets by index
-2) Moving elements after insertion/delete
-3) Reallocation when array if fulfilled/almost empty
+1) Choosing hash-function
+2) Collision resolution
 
 ## Advantages & Disadvantages
 
-:heavy_plus_sign: Accesing elements by index `O(1)`
+:heavy_plus_sign: Accesing elements `o(1)`
+
+:heavy_plus_sign: Insertion elements `o(1)`
+
+:heavy_plus_sign: Deleting elements `o(1)`
 
 
-:heavy_minus_sign: Searching elements takes `O(n)`
-
-:heavy_minus_sign: Insertion and deleting elements takes `O(n)`
-
-:heavy_minus_sign: Hard to choose the best reallocation scheme
+:heavy_minus_sign: dictionary can contains lot of collision and all operations become `O(n)`
 
 ## Complexety 
 
 ### Memory
-Memory complexety: `O(n)`
+Memory complexety: `O(n)`. Depends on implementation
 
 ### Time complexety:
+
+Average:
 | Insert | Delete | Search | Index access| 
 |:------:|:------:|:------:|:-----------:|
-|`O(n)`  | `O(n)` | `O(n)` |  `O(1)`     |
+|`o(1)`  | `o(1)` | `o(1)` |  `o(1)`     |
+
+Words (if we have a lot of collisions):
+| Insert | Delete | Search | Index access| 
+|:------:|:------:|:------:|:-----------:|
+|`O(n)`  | `O(n)` | `O(n)` |  `O(n)`     |
