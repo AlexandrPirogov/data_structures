@@ -1,10 +1,10 @@
 package main
 
 import (
-	"constraints"
-	//      "fmt"
-"	os"
-	"strconv"
+        "constraints"
+//      "fmt"
+ 	"os"
+        "strconv"
 )
 
 type PowerSet[T constraints.Ordered] struct {
