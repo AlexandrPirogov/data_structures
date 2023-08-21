@@ -1,11 +1,6 @@
 package main
 
-import (
-	"constraints"
-	//      "fmt"
-"	os"
-	"strconv"
-)
+import "set/src/constraints"
 
 type PowerSet[T constraints.Ordered] struct {
 	// ваша реализация хранилища
