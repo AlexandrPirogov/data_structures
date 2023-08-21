@@ -13,3 +13,6 @@ Here you can see implementation of known data structures.
 | Queue              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/queue)           |
 | Deque              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/deque)           |
 | Ordered List       | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/orderedlist)     |
+| Hashing            | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/hashing)         |
+| Dictionary         | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/dict)            |
+| Set                | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/set)             |

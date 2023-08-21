@@ -1,6 +1,8 @@
 package main
 
+
 import "set/src/constraints"
+
 
 type PowerSet[T constraints.Ordered] struct {
 	// ваша реализация хранилища
