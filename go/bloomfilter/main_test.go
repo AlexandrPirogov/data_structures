@@ -49,3 +49,17 @@ func TestAddPrettyEmpty(t *testing.T) {
 
 	assert.False(t, sut.IsValue(strings[9]))
 }
+
+func TestAddAndExist(t *testing.T) {
+	sut := BloomFilter{filter_len: 32}
+	for _, v := range strings {
+		sut.Add(v)
+	}
+
+	for _, v := range strings {
+		t.Run(v, func(t *testing.T) {
+			assert.True(t, sut.IsValue(v))
+		})
+	}
+
+}

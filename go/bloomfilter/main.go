@@ -1,10 +1,5 @@
 package main
 
-import (
-	"os"
-)
-
-
 var bits int = 32
 
 // битовый массив длиной f_len ...
