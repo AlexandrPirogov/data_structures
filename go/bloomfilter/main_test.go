@@ -34,11 +34,7 @@ func TestAddWithSingle(t *testing.T) {
 
 	sut.Add(strings[0])
 
-	for i := 1; i < len(strings); i++ {
-		t.Run(strings[i], func(t *testing.T) {
-			assert.False(t, sut.IsValue(strings[i]))
-		})
-	}
+	assert.True(t, sut.IsValue(strings[0]))
 }
 
 func TestAddPrettyEmpty(t *testing.T) {

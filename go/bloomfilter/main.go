@@ -1,5 +1,9 @@
 package main
 
+import (
+	"os"
+)
+
 var bits int = 32
 
 // битовый массив длиной f_len ...
@@ -45,5 +49,5 @@ func (b *BloomFilter) Add(s string) {
 // проверка, имеется ли строка s в фильтре
 func (b *BloomFilter) IsValue(s string) bool {
 	n1, n2 := b.Hash1(s), b.Hash2(s)
-	return bits == (bits&n1)&(bits&n2)
+	return (bits&n1) == n1 && (bits&n2) == n2
 }
