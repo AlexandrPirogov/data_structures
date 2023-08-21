@@ -20,7 +20,7 @@ var strings []string = []string{
 }
 
 func TestAddInEmpty(t *testing.T) {
-	sut := BloomFilter{32, 32}
+	sut := BloomFilter{filter_len: 32}
 
 	for _, v := range strings {
 		t.Run(v, func(t *testing.T) {
@@ -30,7 +30,7 @@ func TestAddInEmpty(t *testing.T) {
 }
 
 func TestAddWithSingle(t *testing.T) {
-	sut := BloomFilter{32, 32}
+	sut := BloomFilter{filter_len: 32}
 
 	sut.Add(strings[0])
 
@@ -42,8 +42,7 @@ func TestAddWithSingle(t *testing.T) {
 }
 
 func TestAddPrettyEmpty(t *testing.T) {
-	sut := BloomFilter{32, 32}
-
+	sut := BloomFilter{filter_len: 32}
 	for i := 0; i < len(strings)-1; i++ {
 		sut.Add(strings[0])
 	}

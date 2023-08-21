@@ -4,10 +4,12 @@ import (
 	"os"
 )
 
+
+var bits int = 32
+
 // битовый массив длиной f_len ...
 type BloomFilter struct {
 	filter_len int
-	bits       int
 }
 
 // хэш-функции
@@ -42,11 +44,11 @@ func (b *BloomFilter) Hash2(s string) int {
 // добавляем строку s в фильтр
 func (b *BloomFilter) Add(s string) {
 	n1, n2 := b.Hash1(s), b.Hash2(s)
-	b.bits = (b.bits | n1) | (b.bits | n2)
+	bits = (bits | n1) | (bits | n2)
 }
 
 // проверка, имеется ли строка s в фильтре
 func (b *BloomFilter) IsValue(s string) bool {
 	n1, n2 := b.Hash1(s), b.Hash2(s)
-	return b.bits == (b.bits&n1)&(b.bits&n2)
+	return bits == (bits&n1)&(bits&n2)
 }
