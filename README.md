@@ -2,18 +2,18 @@
 
 Here you can see implementation of known data structures.
 
-## Content Table
+## Implementations
 
 | Data Structure     | Link                                                                                              |
 |:------------------:|:-------------------------------------------------------------------------------------------------:|
-| Linked List        | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/linkedlist)      |
+| Cache              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/cache)           |
+| Deque              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/deque)           |
+| Dictionary         | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/dict)            |
 | Double Linked List | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/doublelinkedlist)|
 | Dynamic Array      | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/dynamicarry)     |
-| Stack              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/stack)           |
-| Queue              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/queue)           |
-| Deque              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/deque)           |
+| Linked List        | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/linkedlist)      |
 | Ordered List       | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/orderedlist)     |
 | Hashing            | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/hashing)         |
-| Dictionary         | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/dict)            |
+| Queue              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/queue)           |
+| Stack              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/stack)           |
 | Set                | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/set)             |
-| Cache              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/cache)           |
