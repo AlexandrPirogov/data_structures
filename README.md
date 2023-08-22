@@ -16,3 +16,4 @@ Here you can see implementation of known data structures.
 | Hashing            | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/hashing)         |
 | Dictionary         | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/dict)            |
 | Set                | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/set)             |
+| Cache              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/cache)           |
