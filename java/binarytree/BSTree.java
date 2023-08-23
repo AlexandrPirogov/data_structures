@@ -92,18 +92,13 @@ class BST<T> {
   }
 
   public BSTNode<T> FinMinMax(BSTNode<T> FromNode, boolean FindMax) {
-    return Root == null ? null :  (FindMax ? max(FromNode) : min(FromNode));
+    return Root == null ? null : (FindMax ? max(FromNode) : min(FromNode));
   }
 
   public boolean DeleteNodeByKey(int key) {
     if (Root == null) {
       Root = null;
       return false;
-    }
-
-    if (Root.NodeKey == key) {
-      Root = null;
-      return true;
     }
 
     BSTFind<T> find = FindNodeByKey(key);
@@ -113,7 +108,18 @@ class BST<T> {
 
     BSTNode<T> curr = find.Node;
     if (curr.LeftChild == null && curr.RightChild == null) {
-      curr = null;
+      if (Root == curr) {
+        Root = null;
+        return true;
+      }
+
+      curr = curr.Parent;
+      if (curr.LeftChild.NodeKey == key) {
+        curr.LeftChild = null;
+      } else {
+        curr.RightChild = null;
+      }
+
       return true;
     }
 

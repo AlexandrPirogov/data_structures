@@ -3,11 +3,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class BSTreeTests {
-    
+
     @Test
     public void TestCreate() {
         BST<Integer> sut = new BST<Integer>(null);
-        //assert that count == 0 and root is null
+        // assert that count == 0 and root is null
 
         assertEquals(0, sut.Count());
     }
@@ -16,8 +16,8 @@ public class BSTreeTests {
     public void TestAddKeyInEmpty() {
         BSTNode<Integer> root = new BSTNode(0, 0, null);
         BST<Integer> sut = new BST<Integer>(root);
-                
-        //assert that root == added key and count == 1
+
+        // assert that root == added key and count == 1
         assertEquals(1, sut.Count());
         assertEquals(root, sut.Root);
     }
@@ -35,8 +35,8 @@ public class BSTreeTests {
             k--;
             v--;
         }
-        
-        //assert that root-> right is null and count == bunch of nodes
+
+        // assert that root-> right is null and count == bunch of nodes
         assertNull(sut.Root.RightChild);
         assertEquals(10, sut.Count());
     }
@@ -54,8 +54,8 @@ public class BSTreeTests {
             k++;
             v++;
         }
-        
-        //assert that root-> right is null and count == bunch of nodes
+
+        // assert that root-> right is null and count == bunch of nodes
         assertNull(sut.Root.LeftChild);
         assertEquals(10, sut.Count());
     }
@@ -89,8 +89,7 @@ public class BSTreeTests {
         assertEquals(-5, min.NodeKey);
     }
 
-
-      @Test
+    @Test
     public void TestFindMax() {
         BSTNode<Integer> root = new BSTNode(0, 0, null);
         BST<Integer> sut = new BST<Integer>(root);
@@ -103,16 +102,16 @@ public class BSTreeTests {
         assertEquals(5, min.NodeKey);
     }
 
-     @Test
+    @Test
     public void TestFindMinEmpty() {
         BST<Integer> sut = new BST<Integer>(null);
         BSTNode<Integer> res = sut.FinMinMax(sut.Root, false);
         assertEquals(null, res);
     }
 
-      @Test
+    @Test
     public void TestFindMaxEmpty() {
-         BST<Integer> sut = new BST<Integer>(null);
+        BST<Integer> sut = new BST<Integer>(null);
         BSTNode<Integer> res = sut.FinMinMax(sut.Root, true);
         assertEquals(null, res);
     }
@@ -124,14 +123,13 @@ public class BSTreeTests {
 
         assertNull(res.Node);
         assertFalse(res.NodeHasKey);
-        //assert that we can't find val in empty tree
+        // assert that we can't find val in empty tree
     }
-
 
     @Test
     public void TestFindExistingVal() {
 
-         BSTNode<Integer> root = new BSTNode(0, 0, null);
+        BSTNode<Integer> root = new BSTNode(0, 0, null);
         BST<Integer> sut = new BST<Integer>(root);
 
         for (int i = -5; i < 6; i++) {
@@ -163,7 +161,7 @@ public class BSTreeTests {
     @Test
     public void TestDeleteFromEmpty() {
         BST<Integer> sut = new BST<Integer>(null);
-        
+
         int before = sut.Count();
         boolean res = sut.DeleteNodeByKey(0);
         int after = sut.Count();
@@ -176,25 +174,39 @@ public class BSTreeTests {
     public void TestDeleteRootSingle() {
         BSTNode<Integer> root = new BSTNode<Integer>(0, 0, null);
         BST<Integer> sut = new BST<Integer>(root);
-        
+
         int before = sut.Count();
         boolean res = sut.DeleteNodeByKey(0);
         int after = sut.Count();
 
         assertTrue(res);
         assertNull(sut.Root);
-        assertEquals(before-1, after);
+        assertEquals(before - 1, after);
+    }
+
+    @Test
+    public void TestDeleteRootWithRightChild() {
+        BSTNode<Integer> root = new BSTNode<Integer>(0, 0, null);
+        BST<Integer> sut = new BST<Integer>(root);
+        sut.AddKeyValue(1, 1);
+
+        int before = sut.Count();
+        boolean res = sut.DeleteNodeByKey(0);
+        int after = sut.Count();
+
+        assertTrue(res);
+        assertNotNull(sut.Root);
+        assertEquals(before - 1, after);
     }
 
     @Test
     public void TestDeleteSubtreeWithoutRight() {
         BSTNode<Integer> root = new BSTNode<Integer>(0, 0, null);
         BST<Integer> sut = new BST<Integer>(root);
-        
+
         sut.AddKeyValue(-1, -1);
         sut.AddKeyValue(-2, -2);
         sut.AddKeyValue(-3, -3);
-        
 
         int before = sut.Count();
         boolean res = sut.DeleteNodeByKey(-2);
@@ -203,62 +215,125 @@ public class BSTreeTests {
 
         assertTrue(res);
         assertFalse(find.NodeHasKey);
-        assertEquals(before-1, after);
+        assertEquals(before - 1, after);
     }
 
     @Test
     public void TestDeleteSubtreeWithRightWithLeft() {
         BST<Integer> sut = new BST<Integer>(null);
-        
+
         sut.AddKeyValue(8, 8);
         sut.AddKeyValue(4, 4);
         sut.AddKeyValue(6, 6);
         sut.AddKeyValue(5, 5);
-        
 
         int before = sut.Count();
         boolean res = sut.DeleteNodeByKey(4);
         int after = sut.Count();
 
         assertTrue(res);
-        assertEquals(before-1, after);
+        assertEquals(before - 1, after);
     }
 
-     @Test
+    @Test
     public void TestDeleteSubtreeWithRightWithoutLeft() {
         BSTNode<Integer> root = new BSTNode<Integer>(0, 0, null);
         BST<Integer> sut = new BST<Integer>(root);
-        
+
         sut.AddKeyValue(8, 8);
         sut.AddKeyValue(4, 4);
         sut.AddKeyValue(6, 6);
         sut.AddKeyValue(7, 7);
-        
 
         int before = sut.Count();
         boolean res = sut.DeleteNodeByKey(4);
         int after = sut.Count();
 
         assertTrue(res);
-        assertEquals(before-1, after);
+        assertEquals(before - 1, after);
     }
 
     @Test
     public void TestDeleteSubtreeWithRightWithLeft2() {
         BSTNode<Integer> root = new BSTNode<Integer>(0, 0, null);
         BST<Integer> sut = new BST<Integer>(root);
-        
+
         sut.AddKeyValue(8, 8);
         sut.AddKeyValue(4, 4);
         sut.AddKeyValue(6, 6);
         sut.AddKeyValue(7, 7);
-        
 
         int before = sut.Count();
         boolean res = sut.DeleteNodeByKey(4);
         int after = sut.Count();
 
         assertTrue(res);
-        assertEquals(before-1, after);
+        assertEquals(before - 1, after);
+    }
+
+    @Test
+    public void TestDeleteCustom() {
+        BST<Integer> sut = new BST<Integer>(null);
+        int[] arr = new int[] { 8, 4, 12, 2, 1, 3, 6, 5, 7, 10, 9, 11, 14, 13, 15 };
+        for (Integer num : arr) {
+            sut.AddKeyValue(num, num);
+        }
+
+        for (Integer num : arr) {
+
+            int before = sut.Count();
+            boolean res = sut.DeleteNodeByKey(num);
+            int after = sut.Count();
+
+            BSTFind<Integer> find = sut.FindNodeByKey(num);
+
+            assertFalse(find.NodeHasKey);
+            assertTrue(res);
+            assertEquals(before - 1, after);
+        }
+    }
+
+    @Test
+    public void TestDeleteMin() {
+        BST<Integer> sut = new BST<Integer>(null);
+        int[] arr = new int[] { 8, 4, 12, 2, 1, 3, 6, 5, 7, 10, 9, 11, 14, 13, 15 };
+        for (Integer num : arr) {
+            sut.AddKeyValue(num, num);
+        }
+
+        BSTNode<Integer> min = sut.FinMinMax(sut.Root, false);
+
+        int before = sut.Count();
+        boolean res = sut.DeleteNodeByKey(min.NodeKey);
+        int after = sut.Count();
+
+        BSTFind<Integer> find = sut.FindNodeByKey(min.NodeKey);
+
+        assertFalse(find.NodeHasKey);
+        assertTrue(res);
+        assertEquals(before - 1, after);
+
+    }
+
+    @Test
+    public void TestDeleteMax() {
+        BST<Integer> sut = new BST<Integer>(null);
+        int[] arr = new int[] { 8, 4, 12, 2, 1, 3, 6, 5, 7, 10, 9, 11, 14, 13, 15 };
+        for (Integer num : arr) {
+            sut.AddKeyValue(num, num);
+        }
+
+        BSTNode<Integer> min = sut.FinMinMax(sut.Root, true);
+
+        int before = sut.Count();
+        boolean res = sut.DeleteNodeByKey(min.NodeKey);
+        int after = sut.Count();
+
+        BSTFind<Integer> find = sut.FindNodeByKey(min.NodeKey);
+
+        assertFalse(find.NodeHasKey);
+        assertTrue(res);
+        assertEquals(before - 1, after);
+
     }
 }
