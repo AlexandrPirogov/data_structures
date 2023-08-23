@@ -202,7 +202,7 @@ public class SimpleTreeNodeTests {
         SimpleTreeNode<Integer> root = new SimpleTreeNode<Integer>(0, null);
         sut.AddChild(null, root);
         
-        assertTrue(sut.LeafCount() == 0);
+        assertTrue(sut.LeafCount() == 1);
     }
 
     @Test
@@ -252,7 +252,9 @@ public class SimpleTreeNodeTests {
         sut.DeleteNode(root);
         int after = sut.Count();
 
+        int leafs = sut.LeafCount();
         assertTrue(before-after == before);
+        assertTrue(leafs == 0);
     }
 
     @Test
@@ -268,11 +270,12 @@ public class SimpleTreeNodeTests {
         sut.AddChild(l1, l2);
         sut.AddChild(l1, r2);
      
-
         sut.DeleteNode(l1);
         int after = sut.Count();
-
+        int leafsA = sut.LeafCount();
+        
         assertTrue(after == 1);
+        assertEquals(1, leafsA);
     }
 
      @Test
@@ -347,11 +350,14 @@ public class SimpleTreeNodeTests {
         sut.AddChild(l1, lr2);
 
        
+        int leafsB = sut.LeafCount();
         sut.MoveNode(l1, r1);
         int after = r1.Children.size();
+        int leafsA = sut.LeafCount();
 
         assertTrue(after == 1);
         assertTrue(l1.Parent.equals(r1));
         assertFalse(root.Children.contains(l1));
+        assertEquals(leafsB-1, leafsA);
     }
 }

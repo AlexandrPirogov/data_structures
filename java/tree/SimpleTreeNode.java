@@ -66,7 +66,7 @@ class SimpleTree<T> {
         return;
       }
 
-      if (Node.Children == null) {
+      if (Node.Children == null || Node.Children.size() == 0) {
         continue;
       }
 
@@ -91,7 +91,7 @@ class SimpleTree<T> {
       SimpleTreeNode<T> Node = stack.pop();
       res.add(Node);
 
-      if (Node.Children == null) {
+      if (Node.Children == null || Node.Children.size() == 0) {
         continue;
       }
 
@@ -121,7 +121,7 @@ class SimpleTree<T> {
         res.add(Node);
       }
 
-      if (Node.Children == null) {
+      if (Node.Children == null || Node.Children.size() == 0) {
         continue;
       }
 
@@ -161,7 +161,7 @@ class SimpleTree<T> {
       SimpleTreeNode<T> Node = stack.pop();
       count++;
 
-      if (Node.Children == null) {
+      if (Node.Children == null || Node.Children.size() == 0) {
         continue;
       }
 
@@ -177,15 +177,15 @@ class SimpleTree<T> {
     if (Root == null) {
       return 0;
     }
-    int leafs = 0;
 
     Stack<SimpleTreeNode<T>> stack = new Stack<SimpleTreeNode<T>>();
     stack.add(Root);
+    int leafs = 0;
 
     while (!stack.empty()) {
       SimpleTreeNode<T> Node = stack.pop();
 
-      if (Node.Children == null) {
+      if (Node.Children == null || Node.Children.size() == 0) {
         leafs++;
         continue;
       }
@@ -212,7 +212,7 @@ class SimpleTree<T> {
         return Optional.of(Node);
       }
 
-      if (Node.Children == null) {
+      if (Node.Children == null || Node.Children.size() == 0) {
         continue;
       }
 
