@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class BSTreeTests {
@@ -335,5 +337,89 @@ public class BSTreeTests {
         assertTrue(res);
         assertEquals(before - 1, after);
 
+    }
+
+    @Test
+    public void TestWideAllNodesEmpty() {
+          BST<Integer> sut = new BST<Integer>(null);
+          List<BSTNode> res = sut.WideAllNodes();
+
+          assertEquals(0, res.size());
+    }
+
+     @Test
+    public void TestWideAllNodes() {
+        BST<Integer> sut = new BST<Integer>(null);
+        int[] arr = new int[] { 8, 4, 12, 2, 1, 3, 6, 5, 7, 10, 9, 11, 14, 13, 15 };
+        int[] expected = new int[] {8, 4, 12, 2, 6,10,14,1,3,5,7,9,11,13,15};
+        for (Integer num : arr) {
+            sut.AddKeyValue(num, num);
+        }
+
+        List<BSTNode> res = sut.WideAllNodes();
+
+        for (int i = 0; i < res.size(); i++){
+            assertEquals(expected[i], res.get(i).NodeKey);
+        }
+    }
+
+
+    @Test
+    public void TestDeepAllNodesEmpty() {
+        BST<Integer> sut = new BST<Integer>(null);
+
+        for (int i = 0; i < 3; i++) {
+          List<BSTNode> res = sut.DeepAllNodes(i);
+          assertEquals(0, res.size());
+        }
+    }
+
+    @Test
+    public void TestInOrderFilled() {
+        BST<Integer> sut = new BST<Integer>(null);
+        int[] arr = new int[] { 8, 4, 12, 2, 1, 3, 6, 5, 7, 10, 9, 11, 14, 13, 15 };
+        int[] expected = new int[] {1,2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15};
+        for (Integer num : arr) {
+            sut.AddKeyValue(num, num);
+        }
+
+
+        List<BSTNode> res = sut.DeepAllNodes(0);
+        for (int i = 0; i < res.size(); i++){
+            assertEquals(expected[i], res.get(i).NodeKey);
+        }
+    }
+
+    @Test
+    public void TestPostOrderFilled() {
+        BST<Integer> sut = new BST<Integer>(null);
+        int[] arr = new int[] { 8, 4, 12, 2, 1, 3, 6, 5, 7, 10, 9, 11, 14, 13, 15 };
+        int[] expected = new int[] {1, 3, 2, 5, 7, 6, 4, 9, 11, 10, 13, 15, 14, 12, 8};
+        for (Integer num : arr) {
+            sut.AddKeyValue(num, num);
+        }
+
+
+        List<BSTNode> res = sut.DeepAllNodes(1);
+        for (int i = 0; i < res.size(); i++){
+            assertEquals(expected[i], res.get(i).NodeKey);
+        }
+    }
+
+
+    @Test
+    public void TestPreOrderFilled() {
+        BST<Integer> sut = new BST<Integer>(null);
+        int[] arr = new int[] { 8, 4, 12, 2, 1, 3, 6, 5, 7, 10, 9, 11, 14, 13, 15 };
+        int[] expected = new int[] {8, 4, 2, 1, 3, 6, 5, 7, 12, 10, 9, 11, 14, 13, 15};
+        for (Integer num : arr) {
+            sut.AddKeyValue(num, num);
+        }
+
+
+        List<BSTNode> res = sut.DeepAllNodes(2);
+        for (int i = 0; i < res.size(); i++){
+            assertEquals(expected[i], res.get(i).NodeKey);
+        }
     }
 }

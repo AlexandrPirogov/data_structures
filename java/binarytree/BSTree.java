@@ -190,4 +190,79 @@ class BST<T> {
 
     return tmp;
   }
+
+  public ArrayList<BSTNode> WideAllNodes() {
+    ArrayList<BSTNode> res = new ArrayList<BSTNode>();
+    ArrayDeque<BSTNode> queue = new ArrayDeque<BSTNode>();
+    if (Root == null) {
+      return res;
+    }
+
+    queue.add(Root);
+    while (queue.size() > 0) {
+      BSTNode curr = queue.poll();
+      res.add(curr);
+      if (curr.LeftChild != null) {
+        queue.add(curr.LeftChild);
+      }
+
+      if (curr.RightChild != null) {
+        queue.add(curr.RightChild);
+      }
+    }
+
+    return res;
+  }
+
+  public ArrayList<BSTNode> DeepAllNodes(int type) {
+    if (Root == null) {
+      return new ArrayList<BSTNode>();
+    }
+
+    ArrayList<BSTNode> res = new ArrayList<BSTNode>();
+    if (type == 0) {
+      InOrder(Root, res);
+      return res;
+    }
+
+    if (type == 1) {
+      PostOrder(Root, res);
+      return res;
+    }
+
+    PreOrder(Root, res);
+    return res;
+  }
+
+  private void InOrder(BSTNode curr, ArrayList<BSTNode> acc) {
+    if (curr == null) {
+      return;
+    }
+
+    InOrder(curr.LeftChild, acc); 
+    acc.add(curr);   
+    InOrder(curr.RightChild, acc);
+  }
+
+   private void PostOrder(BSTNode curr, ArrayList<BSTNode> acc) {
+    if (curr == null) {
+      return;
+    }
+
+    PostOrder(curr.LeftChild, acc); 
+    PostOrder(curr.RightChild, acc);
+    acc.add(curr);   
+  }
+
+   private void PreOrder(BSTNode curr, ArrayList<BSTNode> acc) {
+    if (curr == null) {
+      return;
+    }
+
+    acc.add(curr);   
+    PreOrder(curr.LeftChild, acc); 
+    PreOrder(curr.RightChild, acc);
+  }
+
+ 
 }
