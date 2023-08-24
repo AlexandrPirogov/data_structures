@@ -7,9 +7,9 @@ public class aBST_tests {
     
     @Test
     public void TestSize() {
-        aBST sut = new aBST(5);
+        aBST sut = new aBST(3);
 
-        assertEquals(31, sut.Tree.length);
+        assertEquals(15, sut.Tree.length);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class aBST_tests {
 
     @Test
     public void TestFindNotExistingInFullFilled() {
-        aBST sut = new aBST(2);
+        aBST sut = new aBST(1);
 
         
         sut.AddKey(0);
@@ -95,7 +95,7 @@ public class aBST_tests {
 
     @Test
     public void TestAddInFullfilled() {
-        aBST sut = new aBST(2);
+        aBST sut = new aBST(1);
 
         
         sut.AddKey(0);
