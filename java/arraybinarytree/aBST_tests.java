@@ -12,6 +12,13 @@ public class aBST_tests {
         assertEquals(15, sut.Tree.length);
     }
 
+     @Test
+    public void TestSizeZero() {
+        aBST sut = new aBST(0);
+
+        assertEquals(1, sut.Tree.length);
+    }
+
     @Test
     public void TestFindInEmpty() {
         aBST sut = new aBST(5);
