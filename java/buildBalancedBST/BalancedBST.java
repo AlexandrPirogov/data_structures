@@ -41,7 +41,7 @@ class BalancedBST {
 
     int mid = (l + r) / 2;
     BSTNode curr = new BSTNode(source[mid], parent);
-    
+    curr.Level = parent == null ? 0 : parent.Level+1;
     curr.LeftChild = generate(l, mid-1, source, curr);
     curr.RightChild = generate(mid + 1, r, source, curr);
     return curr;
