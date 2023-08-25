@@ -30,25 +30,19 @@ class BalancedBST {
     }
     // создаём дерево с нуля из неотсортированного массива a
     // ...
-    generate(0, a.length - 1, a, null);
+    Root = generate(0, a.length - 1, a, null);
 
   }
 
   private BSTNode generate(int l, int r, int[] source, BSTNode parent) {
-    if (l >= r) {
+    if (l > r) {
       return null;
     }
 
     int mid = (l + r) / 2;
     BSTNode curr = new BSTNode(source[mid], parent);
-    if (parent == null) {
-      Root = curr;
-      Root.Level = 0;
-    } else {
-      curr.Level = parent.Level + 1;
-    }
-
-    curr.LeftChild = generate(l, mid, source, curr);
+    
+    curr.LeftChild = generate(l, mid-1, source, curr);
     curr.RightChild = generate(mid + 1, r, source, curr);
     return curr;
   }

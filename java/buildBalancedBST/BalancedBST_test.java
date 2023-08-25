@@ -42,7 +42,7 @@ public class BalancedBST_test {
     @Test
     public void TestGenerate_1() {
         BalancedBST sut = new BalancedBST();
-        int[] a = new int[]{1,2,3,4,5,6,7,8,9,10};
+        int[] a = new int[]{1,2,3,4,5,6, 7};
         sut.GenerateTree(a);
 
         BSTNode tmp = sut.Root;
