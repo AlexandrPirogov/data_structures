@@ -1,13 +1,11 @@
 import java.util.*;
 
-import javax.swing.tree.TreeNode;
-
 class BSTNode {
-  public int NodeKey; // ключ узла
-  public BSTNode Parent; // родитель или null для корня
-  public BSTNode LeftChild; // левый потомок
-  public BSTNode RightChild; // правый потомок
-  public int Level; // глубина узла
+  public int NodeKey; 
+  public BSTNode Parent; 
+  public BSTNode LeftChild;
+  public BSTNode RightChild;
+  public int Level;
 
   public BSTNode(int key, BSTNode parent) {
     NodeKey = key;
@@ -18,7 +16,7 @@ class BSTNode {
 }
 
 class BalancedBST {
-  public BSTNode Root; // корень дерева
+  public BSTNode Root;
 
   public BalancedBST() {
     Root = null;
@@ -30,8 +28,7 @@ class BalancedBST {
       Root = new BSTNode(a[0], null);
       return;
     }
-    // создаём дерево с нуля из неотсортированного массива a
-    // ...
+
     Root = generate(0, a.length - 1, a, null);
 
   }
@@ -53,7 +50,7 @@ class BalancedBST {
     if (root_node == null) {
       return true;
     }
-    return balanceHeight(root_node) != -1; // сбалансировано ли дерево с корнем root_node
+    return balanceHeight(root_node) != -1; 
   }
 
  private int balanceHeight (BSTNode from)
@@ -63,22 +60,17 @@ class BalancedBST {
             return 0;
         }
 
-        // checking left subtree
         int leftSubtreeHeight = balanceHeight (from.LeftChild);
         if (leftSubtreeHeight == -1) return -1;
-        // if left subtree is not balanced then the entire tree is also not balanced
 
-        //checking right subtree
         int rightSubtreeHeight = balanceHeight (from.RightChild);
         if (rightSubtreeHeight == -1) return -1;
-        // if right subtree is not balanced then the entire          tree is also not balanced
 
-        //checking the difference of left and right subtree for current node
         if (Math.abs(leftSubtreeHeight - rightSubtreeHeight) > 1)
         {
             return -1;
         }
-        //if it is balanced then return the height
+
         return (Math.max(leftSubtreeHeight, rightSubtreeHeight) + 1);
     }
 }
