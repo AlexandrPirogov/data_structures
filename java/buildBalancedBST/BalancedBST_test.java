@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -42,7 +43,7 @@ public class BalancedBST_test {
     @Test
     public void TestGenerate_1() {
         BalancedBST sut = new BalancedBST();
-        int[] a = new int[]{1,2,3,4,5,6, 7};
+        int[] a = new int[]{1,2,3,4};
         sut.GenerateTree(a);
 
         BSTNode tmp = sut.Root;
@@ -73,13 +74,12 @@ public class BalancedBST_test {
     }
     
     @Test
-    public void TestBalanced() {
-         BalancedBST sut = new BalancedBST();
-        int[] a = new int[]{1,2,3,4,5,6,7,8,9,10};
-        sut.GenerateTree(a);
+    public void TestNotBalanced() {
+        BSTNode root = new BSTNode(0, null);
+        root.LeftChild = new BSTNode(-5, root);
+        root.LeftChild.LeftChild = new BSTNode(-7, root.LeftChild);
+        BalancedBST sut = new BalancedBST();
 
-        assertTrue(sut.IsBalanced(sut.Root));
-        assertTrue(sut.IsBalanced(sut.Root.LeftChild));
-        assertTrue(sut.IsBalanced(sut.Root.RightChild));
+        assertFalse(sut.IsBalanced(root));
     }
 }

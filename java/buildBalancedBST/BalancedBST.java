@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.tree.TreeNode;
+
 class BSTNode {
   public int NodeKey; // ключ узла
   public BSTNode Parent; // родитель или null для корня
@@ -48,43 +50,35 @@ class BalancedBST {
   }
 
   public boolean IsBalanced(BSTNode root_node) {
-    if (Root == null) {
+    if (root_node == null) {
       return true;
     }
-    return BFS(root_node.LeftChild)-BFS(root_node.RightChild) < 2; // сбалансировано ли дерево с корнем root_node
+    return balanceHeight(root_node) != -1; // сбалансировано ли дерево с корнем root_node
   }
 
-  private int BFS(BSTNode from) {
-    if (from == null) {
-      return 0;
-    }
-    int len = 0;
-    ArrayDeque<BSTNode> q = new ArrayDeque<BSTNode>();
-    q.add(from);
-    int level = 0;
-    int lastAdded = 1;
-    while(q.size() > 0) {
-      int added = 0;
-    
-      int i = lastAdded;
-      while (i > 0) {
-        BSTNode item = q.poll();
-        
-        if (item.LeftChild != null) {
-          added++;
-          q.add(item.LeftChild);
+ private int balanceHeight (BSTNode from)
+    {
+        if (from == null)
+        {
+            return 0;
         }
 
-        if (item.RightChild != null) {
-          added++;
-          q.add(item.RightChild);
-        }
+        // checking left subtree
+        int leftSubtreeHeight = balanceHeight (from.LeftChild);
+        if (leftSubtreeHeight == -1) return -1;
+        // if left subtree is not balanced then the entire tree is also not balanced
 
-        i--;
-      }
-      lastAdded = added;
-      level++;
+        //checking right subtree
+        int rightSubtreeHeight = balanceHeight (from.RightChild);
+        if (rightSubtreeHeight == -1) return -1;
+        // if right subtree is not balanced then the entire          tree is also not balanced
+
+        //checking the difference of left and right subtree for current node
+        if (Math.abs(leftSubtreeHeight - rightSubtreeHeight) > 1)
+        {
+            return -1;
+        }
+        //if it is balanced then return the height
+        return (Math.max(leftSubtreeHeight, rightSubtreeHeight) + 1);
     }
-    return level;
-  }
 }
