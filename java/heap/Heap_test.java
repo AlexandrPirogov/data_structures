@@ -52,7 +52,7 @@ public class Heap_test {
     public void GetMaxFromEmpty(){
         Heap h = new Heap();
         int[] given = new int[0];
-        h.MakeHeap(given, 5);
+        h.MakeHeap(given, 0);
         int res = h.GetMax();
         assertTrue(-1 == res);
     }
@@ -97,6 +97,19 @@ public class Heap_test {
             assertTrue(expected == actual);
         }
     assertTrue(h.GetMax() == -1);
+    }
+
+
+    @Test
+    public void GetMaxFromFull(){
+        Heap h = new Heap();
+        int[] given = new int[]{7,6,2, 0, 9};
+        h.MakeHeap(given, 1);
+        for( Integer num : given){
+             int res = h.GetMax();
+            assertFalse(5 == res);
+
+        }
     }
 
 

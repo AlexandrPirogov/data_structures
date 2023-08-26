@@ -52,7 +52,7 @@ class Heap
         int curr = 0;
         int leftMax = 1;
         int rightMax = 2;
-        while (curr < cursor && (HeapArray[curr] < HeapArray[leftMax] || HeapArray[curr] < HeapArray[rightMax])) {
+        while (curr < cursor && leftMax < HeapArray.length && (HeapArray[curr] < HeapArray[leftMax] || HeapArray[curr] < HeapArray[rightMax])) {
             int max = HeapArray[leftMax];
             int maxI = leftMax;
             if (max < HeapArray[rightMax]) {
