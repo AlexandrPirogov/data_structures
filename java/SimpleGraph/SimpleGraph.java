@@ -31,9 +31,10 @@ class SimpleGraph {
         nextFree();
     }
 
-    // здесь и далее, параметры v -- индекс вершины
-    // в списке vertex
     public void RemoveVertex(int v) {
+        if (v < 0 || v > max_vertex-1) {
+            return;
+        }
         boolean found = false;
         int index = -1;
         for (int i = 0; i < vertex.length && !found; i++) {
@@ -57,7 +58,6 @@ class SimpleGraph {
     }
 
     public boolean IsEdge(int v1, int v2) {
-        // true если есть ребро между вершинами v1 и v2
         return m_adjacency[v1][v2] == 1;
     }
 
@@ -73,7 +73,14 @@ class SimpleGraph {
     }
 
     public void RemoveEdge(int v1, int v2) {
-        // удаление ребра между вершинами v1 и v2
+        Vertex first = vertex[v1];
+        Vertex second = vertex[v2];
+        if (first == null || second == null) {
+            return;
+        }
+
+        m_adjacency[v1][v2] = 0;
+        m_adjacency[v2][v1] = 0;
     }
 
     private void nextFree() {

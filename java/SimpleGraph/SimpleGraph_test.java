@@ -163,4 +163,35 @@ public class SimpleGraph_test {
         assertEquals(1, sut.m_adjacency[1][2]);
         assertEquals(1, sut.m_adjacency[2][1]);
     }
+
+    @Test
+    public void TestRemoveEdgeInEmptyGraph() {
+        int size = 10;
+        SimpleGraph sut = new SimpleGraph(size);
+        sut.RemoveEdge(0, 1);
+        
+        assertEquals(0, sut.m_adjacency[0][1]);
+    }
+
+    @Test
+    public void TestRemoveExistingEdgeInGraph() {
+        int size = 10;
+        SimpleGraph sut = new SimpleGraph(size);
+        for (int i = 0; i < size; i++) {
+            sut.AddVertex(i);
+        }
+
+        for (int i = 0; i < size; i++) {
+            sut.AddEdge(i, size-1-i);
+        }
+
+
+        for (int i = 0; i < size; i++) {
+            sut.RemoveEdge(i, size-1-i);;
+        }
+
+        for (int i = 0; i< size; i++) {
+            assertEquals(sut.m_adjacency[i][size-1-i], 0);
+        }
+    }
 }
