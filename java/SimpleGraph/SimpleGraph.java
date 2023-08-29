@@ -117,7 +117,7 @@ class SimpleGraph {
         vertex[VFrom].hit = true;
         while (!stack.isEmpty() && !found) {
             Integer curr = stack.peekLast();
-            if (vertex[curr] == vertex[VTo]){
+            if (vertex[curr] == vertex[VTo]) {
                 found = true;
                 continue;
             }
@@ -138,17 +138,65 @@ class SimpleGraph {
         }
 
         ArrayList<Vertex> res = new ArrayList<Vertex>();
+        System.out.printf("From node %d to node %d\n", vertex[VFrom].Value, vertex[VTo].Value);
         for (Integer index : stack) {
+            System.out.printf("Node %d\n", vertex[index].Value);
             res.add(vertex[index]);
         }
         return res;
     }
 
-    public void MarkVertex(int curr) {
+    public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo) {
         for (Vertex v : vertex) {
-            if (v.Value == curr) {
-                v.hit = true;
+            v.hit = false;
+        }
+
+        int[] prev = new int[vertex.length*2];
+        int cursor = 0;
+
+        ArrayList<Integer> queue = new ArrayList<Integer>();
+        boolean found = false;
+        queue.add(VFrom);
+        vertex[VFrom].hit = true;
+        while (!queue.isEmpty() && !found) {
+            Integer curr = queue.remove(0);
+
+            if (vertex[curr] == vertex[VTo]) {
+                found = true;
+                break;
+            }
+
+            int adj = 0;
+            for (int i = 0; i < vertex.length; i++) {
+                if (!vertex[i].hit && m_adjacency[curr][i] == 1) {
+                    vertex[i].hit = true;
+                    queue.add(i);
+                    adj++;
+                     prev[cursor] = curr;
+                    if (vertex[i] == vertex[VTo]) {
+                        found = true;
+                        prev[cursor + 1] = VTo;
+                        break;
+                    }
+                }
+            }
+            if (adj > 0) {
+                cursor++;
+
             }
         }
+
+        ArrayList<Vertex> res = new ArrayList<Vertex>();
+        if (queue.isEmpty()){
+            return res;
+        }
+
+        System.out.printf("From node %d to node %d\n", vertex[VFrom].Value, vertex[VTo].Value);
+        for (int i = 0 ; i <= cursor; i++) {
+            System.out.printf("Node %d\n", vertex[prev[i]].Value);
+             res.add(vertex[prev[i]]);
+        }
+
+        return res;
     }
 }
