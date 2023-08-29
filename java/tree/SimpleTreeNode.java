@@ -4,11 +4,13 @@ public class SimpleTreeNode<T> {
   public T NodeValue; // значение в узле
   public SimpleTreeNode<T> Parent; // родитель или null для корня
   public List<SimpleTreeNode<T>> Children; // список дочерних узлов или null
+  public boolean Visited;
 
   public SimpleTreeNode(T val, SimpleTreeNode<T> parent) {
     NodeValue = val;
     Parent = parent;
     Children = null;
+    Visited = false;
   }
 
   public void AddChild(SimpleTreeNode<T> child) {
@@ -146,6 +148,34 @@ class SimpleTree<T> {
       NewParent.AddChild(from.get());
     }
 
+  }
+
+    public ArrayList<T> EvenTrees()
+    {
+      ArrayList<T> res = new ArrayList<T>();
+      if (Root == null) {
+        return res;
+      }
+      PostOrder(Root, 0, res);
+      return res;
+    }
+
+  public int PostOrder(SimpleTreeNode<T> from, int count, ArrayList<T> res) {
+    if (from.Children == null) {
+      return 1;
+    }
+    for (SimpleTreeNode<T> node : from.Children) {
+      if (!node.Visited) {
+        from.Visited = true;
+        
+        count += PostOrder(node, 0, res);
+      }
+    }
+    if ((count+1)%2==0 && from != Root) {
+      res.add(from.Parent.NodeValue);
+      res.add(from.NodeValue);
+    }
+    return count+1;
   }
 
   public int Count() {
