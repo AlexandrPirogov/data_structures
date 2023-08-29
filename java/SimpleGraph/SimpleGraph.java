@@ -2,9 +2,11 @@ import java.util.*;
 
 class Vertex {
     public int Value;
+    public boolean hit;
 
     public Vertex(int val) {
         Value = val;
+        hit = false;
     }
 }
 
@@ -32,7 +34,7 @@ class SimpleGraph {
     }
 
     public void RemoveVertex(int v) {
-        if (v < 0 || v > max_vertex-1) {
+        if (v < 0 || v > max_vertex - 1) {
             return;
         }
         boolean found = false;
@@ -46,7 +48,7 @@ class SimpleGraph {
             }
         }
 
-        if (!found){
+        if (!found) {
             return;
         }
 
@@ -100,6 +102,41 @@ class SimpleGraph {
             if (vertex[i] == null) {
                 lastDeleted = i;
                 found = true;
+            }
+        }
+    }
+
+    public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
+        ArrayList<Vertex> res = new ArrayList<Vertex>();
+        ArrayDeque<Integer> stack = new ArrayDeque<Integer>();
+        boolean found = false;
+        stack.add(VFrom);
+
+        while (!stack.isEmpty() && !found) {
+            Integer curr = stack.pop();
+            res.add(vertex[curr]);
+            vertex[curr].hit = true;
+            if (curr == VTo) {
+                    found = true;
+                    return res;
+                }
+            for (int i = 0; i < vertex.length; i++) {
+                if (!vertex[i].hit && m_adjacency[i][curr] == 1) {
+                    stack.add(i);
+                }
+            }
+        }
+
+        if (!found) {
+            return new ArrayList<Vertex>();
+        }
+        return res;
+    }
+
+    public void MarkVertex(int curr){
+        for (Vertex v : vertex) {
+            if (v.Value == curr) {
+                v.hit = true;
             }
         }
     }

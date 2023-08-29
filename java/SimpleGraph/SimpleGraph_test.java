@@ -2,6 +2,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class SimpleGraph_test {
@@ -83,7 +85,6 @@ public class SimpleGraph_test {
             sut.RemoveVertex(i);
         }
 
-
         for (int i = 0; i < size; i++) {
             assertNull(sut.vertex[i]);
         }
@@ -100,7 +101,7 @@ public class SimpleGraph_test {
         assertEquals(sut.m_adjacency[0][1], 1);
     }
 
-     @Test
+    @Test
     public void TestAddEdgeInLoopInEmpty() {
         int size = 10;
         SimpleGraph sut = new SimpleGraph(size);
@@ -115,12 +116,12 @@ public class SimpleGraph_test {
         int size = 10;
         SimpleGraph sut = new SimpleGraph(size);
         sut.AddVertex(0);
-        sut.AddEdge(0,1);
+        sut.AddEdge(0, 1);
 
         assertEquals(sut.m_adjacency[0][1], 0);
     }
 
-      @Test
+    @Test
     public void TestRemoveVertexWithEdge() {
         int size = 10;
         SimpleGraph sut = new SimpleGraph(size);
@@ -155,7 +156,7 @@ public class SimpleGraph_test {
         sut.AddVertex(0);
         sut.AddVertex(1);
         sut.AddVertex(2);
-        sut.AddEdge(1,2);
+        sut.AddEdge(1, 2);
 
         sut.RemoveVertex(0);
 
@@ -169,7 +170,7 @@ public class SimpleGraph_test {
         int size = 10;
         SimpleGraph sut = new SimpleGraph(size);
         sut.RemoveEdge(0, 1);
-        
+
         assertEquals(0, sut.m_adjacency[0][1]);
     }
 
@@ -181,17 +182,73 @@ public class SimpleGraph_test {
             sut.AddVertex(i);
         }
 
+        for (int i = 0; i < size - 1; i++) {
+            sut.AddEdge(i, i + 1);
+        }
+
         for (int i = 0; i < size; i++) {
-            sut.AddEdge(i, size-1-i);
+            sut.RemoveEdge(i, size - 1 - i);
+            ;
         }
-
 
         for (int i = 0; i < size; i++) {
-            sut.RemoveEdge(i, size-1-i);;
+            assertEquals(sut.m_adjacency[i][size - 1 - i], 0);
+        }
+    }
+
+    @Test
+    public void TestDFSExisting() {
+        int size = 10;
+        SimpleGraph sut = new SimpleGraph(size);
+        for (int i = 0; i < size; i++) {
+            sut.AddVertex(i);
         }
 
-        for (int i = 0; i< size; i++) {
-            assertEquals(sut.m_adjacency[i][size-1-i], 0);
+        sut.AddEdge(0, 1);
+        sut.AddEdge(1, 5);
+        sut.AddEdge(1, 3);
+        sut.AddEdge(3, 6);
+        sut.AddEdge(6, 4);
+        sut.AddEdge(4, 5);
+        sut.AddEdge(5, 9);
+
+        ArrayList<Vertex> res = sut.DepthFirstSearch(0, 9);
+        assertTrue(res.size() == 7);
+    }
+
+    @Test
+    public void TestDFSExisting_1() {
+        int size = 10;
+        SimpleGraph sut = new SimpleGraph(size);
+        for (int i = 0; i < size; i++) {
+            sut.AddVertex(i);
         }
+
+        for (int i = 0; i < size-1; i++) {
+            sut.AddEdge(i, i+1);
+        }
+
+        ArrayList<Vertex> res = sut.DepthFirstSearch(0, 9);
+        assertEquals(10, res.size());
+    }
+
+    @Test
+    public void TestDFSNotExisting() {
+        int size = 10;
+        SimpleGraph sut = new SimpleGraph(size);
+        for (int i = 0; i < size; i++) {
+            sut.AddVertex(i);
+        }
+
+        sut.AddEdge(0, 1);
+        sut.AddEdge(1, 5);
+        sut.AddEdge(1, 3);
+        sut.AddEdge(3, 6);
+        sut.AddEdge(6, 4);
+        sut.AddEdge(4, 5);
+        sut.AddEdge(5, 2);
+
+        ArrayList<Vertex> res = sut.DepthFirstSearch(0, 9);
+        assertTrue(res.size() == 0);
     }
 }
