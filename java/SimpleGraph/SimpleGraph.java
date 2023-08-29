@@ -117,16 +117,18 @@ class SimpleGraph {
         vertex[VFrom].hit = true;
         while (!stack.isEmpty() && !found) {
             Integer curr = stack.peekLast();
-            if (curr == VTo) {
+            if (vertex[curr] == vertex[VTo]){
                 found = true;
-                stack.add(VTo);
+                continue;
             }
+
             int adj = 0;
             for (int i = 0; i < vertex.length && adj == 0; i++) {
-                if (!vertex[i].hit && m_adjacency[i][curr] == 1) {
+                if (!vertex[i].hit && m_adjacency[curr][i] == 1) {
                     vertex[i].hit = true;
                     stack.addLast(i);
                     adj++;
+                    break;
                 }
             }
             if (adj == 0) {
