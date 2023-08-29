@@ -213,7 +213,7 @@ public class SimpleGraph_test {
         sut.AddEdge(5, 9);
 
         ArrayList<Vertex> res = sut.DepthFirstSearch(0, 9);
-        assertTrue(res.size() == 7);
+        assertEquals(6, res.size());
     }
 
     @Test
@@ -230,6 +230,8 @@ public class SimpleGraph_test {
 
         ArrayList<Vertex> res = sut.DepthFirstSearch(0, 9);
         assertEquals(10, res.size());
+        assertEquals(0, res.get(0).Value);
+        assertEquals(9, res.get(9).Value);
     }
 
     @Test

@@ -107,33 +107,42 @@ class SimpleGraph {
     }
 
     public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
-        ArrayList<Vertex> res = new ArrayList<Vertex>();
+        for (Vertex v : vertex) {
+            v.hit = false;
+        }
+
         ArrayDeque<Integer> stack = new ArrayDeque<Integer>();
         boolean found = false;
         stack.add(VFrom);
 
         while (!stack.isEmpty() && !found) {
-            Integer curr = stack.pop();
-            res.add(vertex[curr]);
+            Integer curr = stack.peekLast();
             vertex[curr].hit = true;
             if (curr == VTo) {
-                    found = true;
-                    return res;
-                }
+                found = true;
+                stack.add(VTo);
+            }
+            int adj = 0;
             for (int i = 0; i < vertex.length; i++) {
-                if (!vertex[i].hit && m_adjacency[i][curr] == 1) {
-                    stack.add(i);
+                if (!vertex[i].hit && m_adjacency[curr][i] == 1) {
+                    stack.addLast(i);
+                    adj++;
                 }
+            }
+            if (adj == 0) {
+                stack.removeLast();
+
             }
         }
 
-        if (!found) {
-            return new ArrayList<Vertex>();
+        ArrayList<Vertex> res = new ArrayList<Vertex>();
+        for (Integer index : stack) {
+            res.add(vertex[index]);
         }
         return res;
     }
 
-    public void MarkVertex(int curr){
+    public void MarkVertex(int curr) {
         for (Vertex v : vertex) {
             if (v.Value == curr) {
                 v.hit = true;
