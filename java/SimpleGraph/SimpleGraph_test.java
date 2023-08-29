@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -217,6 +218,25 @@ public class SimpleGraph_test {
     }
 
     @Test
+    public void TestDFSExisting_2() {
+        int size = 10;
+        SimpleGraph sut = new SimpleGraph(size);
+        for (int i = 0; i < size; i++) {
+            sut.AddVertex(i);
+        }
+
+        sut.AddEdge(0, 2);
+        sut.AddEdge(2, 4);
+        sut.AddEdge(2, 5);
+        sut.AddEdge(2, 7);
+
+        sut.AddEdge(7, 1);
+
+        ArrayList<Vertex> res = sut.DepthFirstSearch(0, 1);
+        assertNotEquals(0, res.size());
+    }
+
+     @Test
     public void TestDFSExisting_1() {
         int size = 10;
         SimpleGraph sut = new SimpleGraph(size);

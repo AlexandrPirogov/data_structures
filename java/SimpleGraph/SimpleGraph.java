@@ -114,17 +114,17 @@ class SimpleGraph {
         ArrayDeque<Integer> stack = new ArrayDeque<Integer>();
         boolean found = false;
         stack.add(VFrom);
-
+        vertex[VFrom].hit = true;
         while (!stack.isEmpty() && !found) {
             Integer curr = stack.peekLast();
-            vertex[curr].hit = true;
             if (curr == VTo) {
                 found = true;
                 stack.add(VTo);
             }
             int adj = 0;
-            for (int i = 0; i < vertex.length; i++) {
-                if (!vertex[i].hit && m_adjacency[curr][i] == 1) {
+            for (int i = 0; i < vertex.length && adj == 0; i++) {
+                if (!vertex[i].hit && m_adjacency[i][curr] == 1) {
+                    vertex[i].hit = true;
                     stack.addLast(i);
                     adj++;
                 }
