@@ -272,7 +272,7 @@ public class SimpleGraph_test {
         ArrayList<Vertex> expected = new ArrayList<Vertex>();
         expected.add(new Vertex(0));
         expected.add(new Vertex(7));
- assertEquals(expected.size(), res.size());
+        assertEquals(expected.size(), res.size());
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i).Value, res.get(i).Value);
         }
@@ -299,7 +299,7 @@ public class SimpleGraph_test {
         expected.add(new Vertex(2));
         expected.add(new Vertex(5));
         expected.add(new Vertex(6));
- assertEquals(expected.size(), res.size());
+        assertEquals(expected.size(), res.size());
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i).Value, res.get(i).Value);
         }
@@ -376,8 +376,6 @@ public class SimpleGraph_test {
         assertTrue(res.size() == 0);
     }
 
-
-
     @Test
     public void TestBFSExisting() {
         int size = 10;
@@ -450,7 +448,7 @@ public class SimpleGraph_test {
         ArrayList<Vertex> expected = new ArrayList<Vertex>();
         expected.add(new Vertex(0));
         expected.add(new Vertex(7));
- assertEquals(expected.size(), res.size());
+        assertEquals(expected.size(), res.size());
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i).Value, res.get(i).Value);
         }
@@ -477,7 +475,7 @@ public class SimpleGraph_test {
         expected.add(new Vertex(2));
         expected.add(new Vertex(5));
         expected.add(new Vertex(6));
- assertEquals(expected.size(), res.size());
+        assertEquals(expected.size(), res.size());
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i).Value, res.get(i).Value);
         }
@@ -552,5 +550,61 @@ public class SimpleGraph_test {
 
         ArrayList<Vertex> res = sut.BreadthFirstSearch(0, 9);
         assertTrue(res.size() == 0);
+    }
+
+    @Test
+    public void TestWeakVertices1() {
+        int size = 6;
+        SimpleGraph sut = new SimpleGraph(size);
+        for (int i = 0; i < size; i++) {
+            sut.AddVertex(i);
+        }
+
+        sut.AddEdge(0, 1);
+        sut.AddEdge(0, 2);
+        sut.AddEdge(1, 2);
+        sut.AddEdge(2, 3);
+        sut.AddEdge(1, 5);
+        sut.AddEdge(3, 5);
+        sut.AddEdge(2, 4);
+
+        ArrayList<Vertex> actual = sut.WeakVertices();
+        ArrayList<Vertex> expected = new ArrayList<Vertex>();
+        expected.add(new Vertex(4));
+        expected.add(new Vertex(5));
+        expected.add(new Vertex(3));
+
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i).Value, expected.get(i).Value);
+        }
+    }
+
+    @Test
+    public void TestWeakVerticesZero() {
+        int size = 6;
+        SimpleGraph sut = new SimpleGraph(size);
+        for (int i = 0; i < size; i++) {
+            sut.AddVertex(i);
+        }
+
+        sut.AddEdge(0, 1);
+        sut.AddEdge(0, 2);
+        sut.AddEdge(1, 2);
+        sut.AddEdge(2, 3);
+        sut.AddEdge(1, 5);
+        sut.AddEdge(3, 5);
+        sut.AddEdge(2, 4);
+        sut.AddEdge(4, 0);
+        sut.AddEdge(2, 5);
+        sut.AddEdge(3, 1);
+
+        ArrayList<Vertex> actual = sut.WeakVertices();
+        ArrayList<Vertex> expected = new ArrayList<Vertex>();
+
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i).Value, expected.get(i).Value);
+        }
     }
 }

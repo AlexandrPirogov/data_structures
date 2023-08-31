@@ -151,7 +151,7 @@ class SimpleGraph {
             v.hit = false;
         }
 
-        int[] prev = new int[vertex.length*2];
+        int[] prev = new int[vertex.length * 2];
         int cursor = 0;
 
         ArrayList<Integer> queue = new ArrayList<Integer>();
@@ -172,7 +172,7 @@ class SimpleGraph {
                     vertex[i].hit = true;
                     queue.add(i);
                     adj++;
-                     prev[cursor] = curr;
+                    prev[cursor] = curr;
                     if (vertex[i] == vertex[VTo]) {
                         found = true;
                         prev[cursor + 1] = VTo;
@@ -187,16 +187,55 @@ class SimpleGraph {
         }
 
         ArrayList<Vertex> res = new ArrayList<Vertex>();
-        if (queue.isEmpty()){
+        if (queue.isEmpty()) {
             return res;
         }
 
         System.out.printf("From node %d to node %d\n", vertex[VFrom].Value, vertex[VTo].Value);
-        for (int i = 0 ; i <= cursor; i++) {
+        for (int i = 0; i <= cursor; i++) {
             System.out.printf("Node %d\n", vertex[prev[i]].Value);
-             res.add(vertex[prev[i]]);
+            res.add(vertex[prev[i]]);
         }
 
         return res;
+    }
+
+    public ArrayList<Vertex> WeakVertices() {
+        ArrayList<Vertex> res = new ArrayList<Vertex>();
+        for (Vertex v : vertex) {
+            v.hit = false;
+        }
+
+        for (int i = 0; i < vertex.length; i++) {
+            checkAdj(i, res);
+        }
+        return res;
+    }
+
+    public void checkAdj(Integer curr, ArrayList<Vertex> acc) {
+        HashMap<Integer, Boolean> adj = new HashMap<>();
+
+        for (int i = 0; i < vertex.length; i++) {
+            if (!vertex[i].hit && m_adjacency[curr][i] == 1) {
+                adj.put(i, true);
+            }
+        }
+
+        boolean inTriangle = isAdj(adj);
+
+        if (!inTriangle) {
+            acc.add(vertex[curr]);
+        }
+    }
+
+    public boolean isAdj(HashMap<Integer, Boolean> adj) {
+        for (Map.Entry<Integer, Boolean> f : adj.entrySet()) {
+             for (Map.Entry<Integer, Boolean> s : adj.entrySet()) {
+                if (!f.equals(s) && m_adjacency[f.getKey()][s.getKey()] == 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
