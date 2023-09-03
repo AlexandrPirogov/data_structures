@@ -2,6 +2,7 @@ package graph
 
 import (
 	"log"
+	"math"
 )
 
 type Vertex[T comparable] struct {
@@ -9,6 +10,8 @@ type Vertex[T comparable] struct {
 	Hit    bool
 	Status string
 	Adj    []*Vertex[T]
+	Pre    int
+	Low    int
 }
 
 type Graph[T comparable] struct {
@@ -212,4 +215,50 @@ func (g *Graph[T]) Transpose() *Graph[T] {
 	}
 
 	return &tG
+}
+
+func (g Graph[T]) Tarjan() {
+	count := 0
+	s := []*Vertex[T]{}
+
+	g.unsetAll()
+
+	for _, v := range g.Vertexes {
+		if v.Status == "new" {
+			g.TarjanDFS(v, &count, &s)
+		}
+	}
+}
+
+func (g Graph[T]) TarjanDFS(from *Vertex[T], clock *int, s *[]*Vertex[T]) {
+	//log.Printf("visiting %v %v", from.Val, from.Status)
+	from.Status = "active"
+	*clock++
+	from.Pre = *clock
+	from.Low = from.Pre
+	*s = append(*s, from)
+
+	for _, w := range from.Adj {
+		//log.Printf("adj of %v  is %v, %v", from.Val, w.Val, w.Status)
+		if w.Status == "new" {
+			g.TarjanDFS(w, clock, s)
+			from.Low = int(math.Min(float64(from.Low), float64(w.Low)))
+		} else if w.Status == "active" {
+			from.Low = int(math.Min(float64(from.Low), float64(w.Pre)))
+		}
+	}
+	//log.Printf("node %v pre %d low %d", from.Val, from.Pre, from.Low)
+	from.Status = "finish"
+	if from.Low == from.Pre {
+		for {
+			w := (*s)[len(*s)-1]
+			(*s) = (*s)[:len(*s)-1]
+			log.Printf("node %v pre %d low %d", w.Val, w.Pre, w.Low)
+			if w == from {
+				log.Printf("node %v is a root of C", w.Val)
+				break
+			}
+		}
+	}
+
 }
