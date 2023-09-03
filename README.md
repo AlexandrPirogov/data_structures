@@ -4,6 +4,8 @@ Here you can see implementation of known data structures.
 
 ## Implementations
 
+## Simple data structure
+
 | Data Structure     | Link                                                                                              |
 |:------------------:|:-------------------------------------------------------------------------------------------------:|
 | Cache              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/cache)           |
@@ -17,3 +19,9 @@ Here you can see implementation of known data structures.
 | Queue              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/queue)           |
 | Stack              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/stack)           |
 | Set                | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/set)             |
+
+## Graphs
+
+| Data Structure     | Link                                                                                              |
+|:------------------:|:-------------------------------------------------------------------------------------------------:|
+| Graphs              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/simplegraph)    |
