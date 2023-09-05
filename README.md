@@ -1,11 +1,11 @@
-# Data structures
+# Алгоритмы и структуры данных
 
-Here you can see implementation of known data structures.
+Здесь я оставляю заметки и реализацию по алгоритмам и структурам данных.
+Feel free to contribute!
 
-## Implementations
+## Реализация
 
-## Simple data structure
-
+## Элементарный структуры данных
 | Data Structure     | Link                                                                                              |
 |:------------------:|:-------------------------------------------------------------------------------------------------:|
 | Cache              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/cache)           |
@@ -20,7 +20,7 @@ Here you can see implementation of known data structures.
 | Stack              | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/stack)           |
 | Set                | [Implementation](https://github.com/AlexandrPirogov/data_structures/tree/main/go/set)             |
 
-## Graphs
+## Графы. 
 
 | Data Structure     | Link                                                                                              |
 |:------------------:|:-------------------------------------------------------------------------------------------------:|
