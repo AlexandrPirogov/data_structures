@@ -3,6 +3,7 @@ package graph
 import (
 	"container/heap"
 	"log"
+	"math"
 )
 
 type Edge struct {
@@ -24,9 +25,11 @@ const active = "active"
 const finished = "finished"
 
 type Vertex struct {
-	Val    int
-	Edges  []*Edge
-	Status string
+	Val         int
+	Edges       []*Edge
+	Status      string
+	ShortDist   int
+	ShortParent *Vertex
 }
 
 func newVertex(val int) *Vertex {
@@ -37,17 +40,21 @@ func newVertex(val int) *Vertex {
 	}
 }
 
-func (from *Vertex) addEdge(w int, to *Vertex) {
-	from.Edges = append(from.Edges, newEdge(w, from, to))
-	to.Edges = append(to.Edges, newEdge(w, to, from))
+func (from *Vertex) addEdge(e *Edge) {
+	from.Edges = append(from.Edges, e)
+	//to.Edges = append(to.Edges, newEdge(w, to, from))
 }
 
 type Graph struct {
 	Vertexes []*Vertex
+	Edges    []*Edge
 }
 
 func New() Graph {
-	return Graph{Vertexes: make([]*Vertex, 0)}
+	return Graph{
+		Vertexes: make([]*Vertex, 0),
+		Edges:    make([]*Edge, 0),
+	}
 }
 
 func (g *Graph) AddVertex(v int) {
@@ -58,7 +65,9 @@ func (g *Graph) AddVertex(v int) {
 func (g *Graph) AddEdge(vert1, vert2, weight int) {
 	v1 := g.findByVal(vert1)
 	v2 := g.findByVal(vert2)
-	v1.addEdge(weight, v2)
+	e := newEdge(weight, v1, v2)
+	v1.addEdge(e)
+	g.Edges = append(g.Edges, e)
 }
 
 func (g *Graph) findByVal(val int) *Vertex {
@@ -86,7 +95,7 @@ func rDFS(v *Vertex) {
 	v.Status = active
 	for _, e := range v.Edges {
 		if e.To.Status == "new" {
-			log.Printf("from %d to %d weight %d", e.From.Val, e.To.Val, e.Weight)
+			log.Printf("from %d to %d weight %d short %d", e.From.Val, e.To.Val, e.Weight, e.To.ShortDist)
 			rDFS(e.To)
 		}
 	}
@@ -139,5 +148,132 @@ func primeLoop(v *Vertex, h *EdgeHeap, g *Graph, acc *Graph) {
 		primeLoop(e.To, h, g, acc)
 	}
 	v.Status = finished
+
+}
+
+func (g Graph) ShortestDFS(from int, to int) {
+	g.reset()
+	v1 := g.findByVal(from)
+	//v2 := g.findByVal(to)
+	topSort := []*Vertex{}
+	g.shortDFS(v1, &topSort)
+	for _, v := range topSort {
+		log.Printf("%d", v.Val)
+		if v == v1 {
+			v.ShortDist = 0
+		} else {
+			v.ShortDist = math.MaxInt
+		}
+	}
+
+	for _, u := range topSort {
+		for _, v := range u.Edges {
+			if v.To.ShortDist > u.ShortDist+v.Weight {
+				v.To.ShortDist = u.ShortDist + v.Weight
+				v.To.ShortParent = u
+			}
+
+		}
+	}
+
+	v5 := g.findByVal(5)
+	for v5.ShortParent != nil {
+		log.Printf("Vert %d", v5.Val)
+		v5 = v5.ShortParent
+	}
+}
+
+func (g *Graph) shortDFS(v *Vertex, top *[]*Vertex) {
+	v.Status = active
+	for _, e := range v.Edges {
+		if e.To.Status == new {
+			g.shortDFS(e.To, top)
+		}
+	}
+
+	v.Status = finished
+	*top = append([]*Vertex{v}, *top...)
+}
+
+func (g Graph) Dijkstra(from int) {
+	g.reset()
+	v1 := g.findByVal(from)
+	for _, v := range g.Vertexes {
+		if v == v1 {
+			v.ShortDist = 0
+		} else {
+			v.ShortDist = math.MaxInt
+		}
+	}
+
+	h := NewVertexHeap()
+	heap.Push(h, v1)
+	g.dijkstra(v1, h)
+
+	for _, v := range g.Vertexes {
+		v5 := g.findByVal(v.Val)
+		for v5.ShortParent != nil {
+			log.Printf("Vert %d %d", v5.Val, v5.ShortDist)
+			v5 = v5.ShortParent
+		}
+		log.Printf("Vert %d 0", v1.Val)
+		log.Println()
+
+	}
+
+}
+
+func (g *Graph) dijkstra(v *Vertex, h *VertexHeap) {
+	for h.Len() > 0 {
+		u := heap.Pop(h).(*Vertex)
+		for _, v := range u.Edges {
+			if v.To.ShortDist > u.ShortDist+v.Weight {
+				v.To.ShortDist = u.ShortDist + v.Weight
+				v.To.ShortParent = u
+				heap.Push(h, v.To)
+			}
+
+		}
+	}
+}
+
+func (g Graph) BellmanFord(from int) {
+	g.reset()
+	v1 := g.findByVal(from)
+	for _, v := range g.Vertexes {
+		if v == v1 {
+			v.ShortDist = 0
+		} else {
+			v.ShortDist = 1000
+		}
+	}
+
+	g.bellmanFord(v1)
+	for _, v := range g.Vertexes {
+		v5 := g.findByVal(v.Val)
+		for v5.ShortParent != nil {
+			log.Printf("Vert %d %d", v5.Val, v5.ShortDist)
+			v5 = v5.ShortParent
+		}
+		log.Printf("Vert %d 0", v1.Val)
+		log.Println()
+
+	}
+
+}
+
+func (g *Graph) bellmanFord(v *Vertex) {
+
+	for i := 0; i < len(g.Vertexes)-1; i++ {
+		for _, e := range g.Edges {
+			//log.Printf("u %d-->v %d, dist(u) %d dist(v) %d w %d", e.From.Val, e.To.Val, e.From.ShortDist, e.To.ShortDist, e.Weight)
+			if e.To.ShortDist > e.From.ShortDist+e.Weight {
+				e.To.ShortDist = e.From.ShortDist + e.Weight
+				e.To.ShortParent = e.From
+			}
+			//log.Printf("u %d-->v %d, dist(u) %d dist(v) %d w %d", e.From.Val, e.To.Val, e.From.ShortDist, e.To.ShortDist, e.Weight)
+			//log.Println()
+		}
+	}
 
 }
